@@ -1,0 +1,11 @@
+.footer-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+    img{
+        max-width: 183px;
+    }
+}

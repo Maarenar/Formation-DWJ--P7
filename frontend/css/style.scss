@@ -1,0 +1,64 @@
+@import './variables';
+@import './header';
+@import './footer';
+@import './_home';
+@import './buttons';
+@import './user-page';
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: rgba(236, 236, 236, 0.5);
+    height: 100vh;
+}
+
+a{
+    text-decoration: none;
+}
+
+a, p, li{
+    font-weight: 300;
+}
+
+h1, h2{
+    font-weight: 400;
+}
+
+h1{
+    font-size: 60px;
+    text-align: center;
+    margin: auto;
+    @media (max-width: 768px){
+        font-size: 46px;
+    }
+    @media (max-width: 576px){
+        font-size: 35px;
+    }
+}
+
+.page-container{
+    width: 100%;
+    max-width: 1600px;
+    position: relative;
+    margin: auto;
+}
+
+.new-pswd-container{
+    width: 50%;
+    margin: auto;
+    padding: 50px; 
+    #form-new-pswd{
+        display: flex;
+        justify-content: space-between;
+        input{
+            flex-grow: 3;
+        }
+    }
+    p{
+        margin-bottom: 30px;
+    }
+}

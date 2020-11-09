@@ -1,0 +1,116 @@
+#user-page{
+    display: flex;
+    @media #{$mobile-query}{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}
+
+#feed{
+    width: 80%;
+    position: relative;
+    @media #{$mobile-query}{
+        width: 100%;
+    }
+    .post-container{
+        background-color: #fff;
+        width: 80%;
+        margin: 50px auto 50px auto;
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.05);
+        padding: 50px;
+        @media #{$mobile-query}{
+            width: 95%;
+            margin-top: 25px;
+            padding: 10px;
+        }
+        .author-content{
+            display: flex;
+            align-items: center;
+            .author-name{
+                font-weight: 500;
+                margin-right: 5px;
+            }
+        }
+        .post-content{
+            border-bottom: 1px solid $secondary-color;
+            padding: 20px;
+        }
+        .liking-and-commenting{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            .liking{
+                p{
+                    display: inline;
+                    margin-right: 5px;
+                }
+                .likes-number{
+                    font-weight: 400;
+                }
+            }
+            .far{
+                font-size: 30px;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+        .post-coms{
+            margin-top: 20px;
+            >div{
+                span,p{
+                display: inline;
+                margin-right: 5px;
+                }
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+            .com-author{
+                font-weight: 400;
+            }
+            .see-more{
+                font-weight: 500;
+                font-size: 20px;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+#user{
+    width: 20%;
+    position: relative;
+    @media #{$mobile-query}{
+        width: 100%;
+    }
+    > div{
+        position: fixed;
+        top: 144px;
+        @media #{$mobile-query}{
+            position: relative;
+            top: 0;
+            display: flex;
+            width: 80%;
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+            padding-top: 20px;
+        }
+    }
+    img{
+        border-radius: 100%;
+        @media #{$mobile-query}{
+            margin-right: 10px;
+        }
+    }
+    #user-name{
+        font-weight: 500;
+        margin-top: 20px;
+        @media #{$mobile-query}{
+            margin-top: 0;
+        }
+    }
+}

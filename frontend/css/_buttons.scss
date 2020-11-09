@@ -1,0 +1,36 @@
+//FONTS
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+//COLORS
+$primary-color :  #172542;
+$secondary-color : #eaedf3;
+
+.btn{
+    padding: 15px 30px 15px 30px;
+    border-radius: 29px;
+    font-size: 20px;
+    font-weight: 300;
+    &.main-btn{
+    background-color: $primary-color;
+    border: 1px solid $primary-color;
+    color: white;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.08);
+    transition: .5s;
+    &:hover{
+        background-color: transparent;
+        color: #172542;
+        box-shadow: none;
+        cursor: pointer;
+        }
+    }
+    &.secondary-btn{
+        background-color: transparent;
+        border: none;
+        color: #172542;
+        transition: 1s;
+        &:hover{
+            background-color: $secondary-color;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Groupomania</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.0/css/all.css" integrity="sha384-73lvm+n3qtrHBHjfLuMY7kIL3CdwrRc5jqCtzWASs6MshmR6Tq2veVBC5OVkSwEF" crossorigin="anonymous">
+    </head>
+    <body>
+        <header>
+            <div class="logo-container">
+                <a href="./index.html"><img src="./assets/img/icon-black.svg"></a>
+            </div>
+        </header>
+        <main class="home-container">
+            <div id="login-form" class="hide">
+                <i onclick="openLoginForm()" class="fas fa-times"></i>
+                <form action="">
+                    <label for="email"></label>
+                    <input type="email" name="email" placeholder="email">
+                    <label for="password"></label>
+                    <input type="password" name="password" placeholder="password">
+                    <button type="submit" class="btn main-btn" onclick="userLogIn()">Connexion</button>
+                </form>
+                <a href="./reset-pswd.html"><button class="btn secondary-btn">Mot de passe oublié</button></a>
+            </div>
+            <div class="page-container">
+                <div class="video-container">
+                    <video autoplay muted>
+                        <source src="./assets/videos/Meeting.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video> 
+                </div>
+                <section class="bienvenue">
+                    <h1>Bienvenue sur le forum<br><span class="company-name">Groupomania</span></h1>
+                    <div class="home-connexion">
+                        <button id="connect-button" class="btn main-btn" onclick="openLoginForm()">Me connecter</button>
+                        <div class="not-user" onclick="openSigninForm()">
+                            <p>Pas encore inscrit?</p>
+                            <i class="far fa-user-circle"></i> Créez votre compte
+                        </div>
+                        <div id="signin-form" class="not-show">
+                            <i onclick="openSigninForm()" class="fas fa-times"></i>
+                            <p>Créez votre compte</p>
+                            <form action="">
+                                <div>
+                                    <label for="lastname"></label>
+                                    <input type="text" name="lastname" placeholder="Nom">
+                                    <label for="firstname"></label>
+                                    <input type="text" name="firstname" placeholder="Prénom">
+                                </div>
+                                <div class="email-and-psw">
+                                    <label for="email"></label>
+                                    <input type="email" name="email" placeholder="Email">
+                                    <div class="psw-section">
+                                        <label for="password"></label>
+                                        <input type="password" id="pswd-input" name="password" placeholder="Mot de passe">
+                                        <i class="fas fa-eye" onclick="showPassword()"></i>
+                                    </div>
+                                </div>
+                                <label for="department"></label>
+                                <input type="text" name="department" placeholder="Département">
+                                <button class="btn main-btn" type="submit" onclick="userSignin()">S'inscrire</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-container">
+                <img src="./assets/img/icon-footer.png">
+                <p>&#xA9 2020</p>
+            </div>
+        </footer>
+        <script type="text/javascript" src="./js/ui.js"></script>
+        <script type="text/javascript" src="./js/utils.js"></script>
+        <script type="text/javascript" src="./js/home.js"></script>
+    </body>
+</html>
