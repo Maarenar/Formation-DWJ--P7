@@ -18,39 +18,7 @@ exports.findOneById = (req, res, next) => {
       } else res.send(data);
     });
 };
-/*
-//FONCTION DE CONNEXION
-exports.login = (req,res,next) => {
-  User.findByEmail(req.params.email, (err, data) => {
-    if(err){
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: "L'utilisateur n'existe pas"
-        });
-      } else {
-        res.status(500).send({
-          message: "Erreur"
-        });
-      }
-    } else {
-      bcrypt.compare(req.params.password, user.password)
-      .then(valid =>{
-        if(!valid){
-          return res.status(401).json({ error : 'Mot de passe incorrect!'})
-        }
-        res.status(200).json({
-          userId: user.id,
-          token: jwt.sign(
-            { userId: user.id },
-            'RANDOM_TOKEN_SECRET',
-            { expiresIn: '24h' },
-          )
-        })
-      })
-      .catch(error => res.status(500).json({ error }));
-    }
-  });
-};*/
+
 
 /*
 //FONCTION CREATION D'UN NOUVEL UTILISATEUR
