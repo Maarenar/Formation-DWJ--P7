@@ -1,6 +1,4 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
-const sequelize = new Sequelize("mysql");
-const User = require('../models/Coms.models');
+const User = require('../models/Comments.models');
 
 /*//PUBLIER UN COMMENTAIRE
 exports.createComment = (req, res) => {

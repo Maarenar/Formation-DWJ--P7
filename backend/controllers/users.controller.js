@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/Users.model');
 
 //RECUPERE TOUTES LES INFORMATIONS D'UN UTILISATEUR 
-exports.findOneById = (req, res, next) => {
-    User.findById(req.params.userId, (err, data) => {
+exports.userProfile = (req, res, next) => {
+    User.userProfile(req.params.userId, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
@@ -18,10 +18,10 @@ exports.findOneById = (req, res, next) => {
       } else res.send(data);
     });
 };
-/*
-//FONCTION DE CONNEXION
+
+/*//FONCTION DE CONNEXION
 exports.login = (req,res,next) => {
-  User.findByEmail(req.params.email, (err, data) => {
+  User.login(req.params.email, (err, data) => {
     if(err){
       if (err.kind === "not_found") {
         res.status(404).send({

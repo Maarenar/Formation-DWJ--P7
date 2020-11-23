@@ -2,12 +2,15 @@ const sql = require("./db.js");
 
 // constructor
 const Post = function(post) {
-  this.userId       = post.userId;
-  this.date         = post.date;
-  this.userLiked    = post.userLiked;
+  this.postId       = post.postId,
+  this.content      = post.content,
+  this.likes        = post.likes,
+  this.userLiked    = post.userId,
+  this.date         = post.date,
+  this.userLiked    = post.userLiked 
 };
 
-//CREER UN NOUVEL UTILISATEUR 
+/*//CREER UN NOUVEL UTILISATEUR 
 User.create = (newUser, result) => {
   sql.query("INSERT INTO gp-users SET ?", newUser, (err, res) => {
     if (err) {
@@ -19,31 +22,11 @@ User.create = (newUser, result) => {
     console.log("created user: ", { id: res.insertId, ...newUser });
     result(null, { id: res.insertId, ...newUser });
   });
-};
+};*/
 
-//TROUVER UN UTILISATEUR AVEC SON EMAIL
-User.findByEmail = (userEmail, result) => {
-  sql.query(`SELECT * FROM gp-users WHERE email = ${userEmail}`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
-
-    if (res.length) {
-      console.log("found user: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
-
-    // not found User with the email
-    result({ kind: "not_found" }, null);
-  });
-};
-
-//TROUVER UN UTILISATEUR AVEC SON ID
-User.findById = (userId, result) => {
-    sql.query(`SELECT * FROM gp_users WHERE id = ${userId}`, (err, res) => {
+//TROUVER UN POST AVEC SON ID
+Post.getOnePost = (postId, result) => { 
+    sql.query(`SELECT * FROM gp_posts WHERE postId = ${postId}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -51,17 +34,17 @@ User.findById = (userId, result) => {
       }
   
       if (res.length) {
-        console.log("found user: ", res[0]);
+        console.log("found post: ", res[0]);
         result(null, res[0]);
         return;
       }
   
-      // not found User with the id
+      // not found Post with the id
       result({ kind: "not_found" }, null);
     });
   };
 
-//METTRE A JOUR LES INFORMATIONS D'UN UTILISATEUR
+/*//METTRE A JOUR LES INFORMATIONS D'UN UTILISATEUR
 User.updateById = (id, user, result) => {
   sql.query(
     `UPDATE gp-users SET email = ?, password = ?, lastname = ?, firstname = ?, department = ?  WHERE id = ${userId}` ,
@@ -83,9 +66,9 @@ User.updateById = (id, user, result) => {
       result(null, { id: id, ...user });
     }
   );
-};
+};*/
 
-//SUPPRIMER UN UTILISATEUR
+/*//SUPPRIMER UN UTILISATEUR
 User.remove = (id, result) => {
   sql.query("DELETE FROM gp-users WHERE id = ?", id, (err, res) => {
     if (err) {
@@ -103,7 +86,7 @@ User.remove = (id, result) => {
     console.log("deleted user with id: ", id);
     result(null, res);
   });
-};
+};*/
 
-module.exports = User;
+module.exports = Post;
 

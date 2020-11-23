@@ -1,5 +1,6 @@
-//RÉCUPÈRE LES DONNÉES UTILISATEUR ET UTILISE LA FONCTION POUR LES AFFICHER
-request('GET', 'https://localhost:3000/:1', function() {
+/*//RÉCUPÈRE LES DONNÉES UTILISATEUR ET UTILISE LA FONCTION POUR LES AFFICHER
+apiCall('GET', 'https://localhost:3000/:1', function() {
+    console.log(data);
     //displayUserInfo();//on reçoit un objet avec les données de l'utilisateur
 });
 
@@ -11,7 +12,7 @@ function createName(userInfo){
     return `{$firstname}` + `{$lastname}`;
 }
 
-//AFFICHE LES DONNÉES UTILISATEUR*/
+//AFFICHE LES DONNÉES UTILISATEUR
 
 function displayUserInfo(userInfo) {
     let profilePic = document.getElementById('profile-pic');
@@ -28,7 +29,7 @@ function displayUserInfo(userInfo) {
 //RECUPERE LES POSTS ET COMMENTAIRES
 request('GET', 'https://localhost:3000/api/posts/', function(postInfos) {
     displayComs();//on reçoit un objet avec les données de l'utilisateur
-});
+});*/
 
 //AFFICHE LES POSTS
 function displayPost() {

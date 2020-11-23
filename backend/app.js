@@ -16,15 +16,16 @@ app.use(bodyParser.json());
 
 
 const usersRoutes = require('./routes/users.routes');
-app.use('/', usersRoutes);
+app.use('/api', usersRoutes);
+
+const postsRoutes   = require('./routes/posts.routes');
+app.use('/api/posts', postsRoutes);
 
 /*
-const postsRoutes   = require('./routes/posts.routes');
-const comsRoutes    = require('./routes/coms.routes');
 
-app.use('/api/users', usersRoutes);
-app.use('/api/posts', postsRoutes);
-app.use('/api/coms', comsRoutes);*/
+const commentsRoutes    = require('./routes/comments.routes');
+
+app.use('/api/comments', commentsRoutes);*/
 
 
 module.exports = app;

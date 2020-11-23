@@ -2,11 +2,12 @@ const sql = require("./db.js");
 
 // constructor
 const User = function(user) {
-  this.email        = user.email;
-  this.password     = user.password;
-  this.lastname     = user.lastname;
-  this.firstname    = user.firstname;
-  this.depatment    = user.department;
+  this.userId       = user.userId,
+  this.email        = user.email,
+  this.password     = user.password,
+  this.lastname     = user.lastname,
+  this.firstname    = user.firstname,
+  this.department   = user.department
 }; 
 
 /*//CREER UN NOUVEL UTILISATEUR 
@@ -21,10 +22,11 @@ User.create = (newUser, result) => {
     console.log("created user: ", { id: res.insertId, ...newUser });
     result(null, { id: res.insertId, ...newUser });
   });
-};*/
-/*
-//TROUVER UN UTILISATEUR AVEC SON EMAIL
-User.findByEmail = (email, result) => {
+};
+*/
+
+/*//TROUVER UN UTILISATEUR AVEC SON EMAIL
+User.login = (email, result) => {
   sql.query(`SELECT * FROM gp-users WHERE email = ${email}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -43,7 +45,7 @@ User.findByEmail = (email, result) => {
 };*/
 
 //TROUVER UN UTILISATEUR AVEC SON ID
-User.findById = (userId, result) => {
+User.userProfile = (userId, result) => {
     sql.query(`SELECT * FROM gp_users WHERE id = ${userId}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
