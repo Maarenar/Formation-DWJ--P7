@@ -1,84 +1,102 @@
 #user-page{
     display: flex;
+    min-height: 700px;
     @media #{$mobile-query}{
         flex-direction: column-reverse;
         align-items: center;
     }
 }
 
-#feed{
+#feed-container{
     width: 80%;
-    position: relative;
-    @media #{$mobile-query}{
-        width: 100%;
-    }
-    .post-container{
-        background-color: #fff;
-        width: 80%;
-        margin: 50px auto 50px auto;
-        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.05);
-        padding: 50px;
-        @media #{$mobile-query}{
-            width: 95%;
-            margin-top: 25px;
+    #post-something{
+        padding-top: 50px;
+        input{
+            display: block;
+            margin: auto;
+            width: 40%;
             padding: 10px;
+            font-size: 15px;
+            box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: none;
         }
-        .author-content{
-            display: flex;
-            align-items: center;
-            .author-name{
-                font-weight: 500;
-                margin-right: 5px;
+    }
+    #feed{
+        position: relative;
+        @media #{$mobile-query}{
+            width: 100%;
+        }
+        .post-container{
+            background-color: #fff;
+            width: 80%;
+            margin: 50px auto 50px auto;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.05);
+            padding: 50px;
+            @media #{$mobile-query}{
+                width: 95%;
+                margin-top: 25px;
+                padding: 10px;
             }
-        }
-        .post-content{
-            border-bottom: 1px solid $secondary-color;
-            padding: 20px;
-        }
-        .liking-and-commenting{
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            .liking{
-                p{
-                    display: inline;
+            .author-content{
+                display: flex;
+                align-items: center;
+                .author-name{
+                    font-weight: 500;
                     margin-right: 5px;
                 }
-                .likes-number{
+            }
+            .post-content{
+                border-bottom: 1px solid $secondary-color;
+                padding: 20px;
+            }
+            .liking-and-commenting{
+                display: flex;
+                justify-content: space-between;
+                margin-top: 10px;
+                .liking{
+                    p{
+                        display: inline;
+                        margin-right: 5px;
+                    }
+                    .likes-number{
+                        font-weight: 400;
+                    }
+                }
+                .far{
+                    font-size: 30px;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+            .post-coms{
+                margin-top: 20px;
+                >div{
+                    span,p{
+                    display: inline;
+                    margin-right: 5px;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+                .com-author{
                     font-weight: 400;
                 }
-            }
-            .far{
-                font-size: 30px;
-                &:hover{
-                    cursor: pointer;
-                }
-            }
-        }
-        .post-coms{
-            margin-top: 20px;
-            >div{
-                span,p{
-                display: inline;
-                margin-right: 5px;
-                }
-                &:hover{
-                    cursor: pointer;
-                }
-            }
-            .com-author{
-                font-weight: 400;
-            }
-            .see-more{
-                font-weight: 500;
-                font-size: 20px;
-                &:hover{
-                    cursor: pointer;
+                .see-more{
+                    font-weight: 500;
+                    font-size: 20px;
+                    &:hover{
+                        cursor: pointer;
+                    }
                 }
             }
         }
     }
 }
+
+
 
 #user{
     width: 20%;

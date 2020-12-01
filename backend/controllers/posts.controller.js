@@ -1,15 +1,7 @@
+const { getOnePost } = require('../models/Posts.models');
 const Post = require('../models/Posts.models');
 
-/*//PUBLIER UN POST
-exports.createPost = (req, res) => {
-  };*/
-
-/*//AFFICHER TOUS LES POSTS
-exports.getAllPost = (req, res, next) => {
-  
-};*/
-
-//AFFICHER UN POST
+//AFFICHER UN POST AVEC : NOM ET PRENOM DE L'AUTEUR, CONTENU DU POST, COMMENTAIRE : CONTENU + NOM ET PRENOM DE L'AUTEUR
 exports.getOnePost = (req, res, next) => {
     Post.getOnePost(req.params.postId, (err, data) => {
       if (err) {
@@ -26,23 +18,23 @@ exports.getOnePost = (req, res, next) => {
     });
 };
 
-
-/*//AFFICHER L'UTILISATEUR QUI A PUBLIE LE POST
-exports.getPostAuthor = (req, res) => {
+/*//AFFICHER TOUS LES POSTS AVEC : NOM ET PRENOM DE L'AUTEUR, CONTENU DU POST, COMMENTAIRE : CONTENU + NOM ET PRENOM DE L'AUTEUR POUR CHAQUE POST
+exports.getAllPosts = (req, res, next) => {
+    Post.getAll((err, data) => {
+      if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving customers."
+      });
+    else res.send(data);
+    for each getonepost
+    });
 };*/
 
-/*//AFFICHER LE NOMBRE DE COMMENTAIRES D'UN POST
-exports.numberOfComments = (req, res) => {
-};
+/*CREER UN POST
+createPost
+*/
 
-//AFFICHER LES COMMENTAIRES D'UN POST
-exports.getPostComments = (req, res) => {
-};
-
-//MODIFIER UN POST -> AUTHOR ONLY
-exports.updatePost = (req, res) => {
-};
-
-//SUPPRIMER UN POST -> AUTHOR AND ADMIN ONLY
-exports.deletePost = (req, res) => {
-};*/
+/**
+ * EDITER UN POST
+ */

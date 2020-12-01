@@ -49,6 +49,12 @@ User.findOneByEmail = (email, result) => {
   });
 };
 
+//ajouter un utilisateur
+  //INSERT INTO
+//EDITER UN utilisateur
+  //UPDATE SET
+//supprimer un utilisateur
+  //DELETE
 
 module.exports = User;
 
