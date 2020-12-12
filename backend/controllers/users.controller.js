@@ -2,6 +2,23 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users.model');
 
+exports.signup = (req, res, next) => {
+  bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+      User.create({
+        lastname : req.body.lastname,
+        firstname : req.body.firstname,
+        email: req.body.email,
+        password: hash,
+        department : req.body.department
+      })
+      .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+      .catch(error => res.status(400).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+
+
 //RECUPERE TOUTES LES INFORMATIONS D'UN UTILISATEUR -> AFFICHER LE PROFIL
 exports.userProfile = (req, res, next) => {
     User.findOneById(req.params.userId, (err, data) => {
@@ -19,7 +36,9 @@ exports.userProfile = (req, res, next) => {
     });
 };
 
-//LOGIN
+
+
+/*//LOGIN
 exports.login = (req,res,next) => {
     User.findOneByEmail({ email : req.body.email })//on recherche l'email dans la base de données
     .then(user => {
@@ -43,24 +62,20 @@ exports.login = (req,res,next) => {
         .catch(error => res.status(500).json({ error }));
     })
     .catch(error => res.status(500).json({ error }));
-};
+};*/
 
-//DELETE ACCOUNT
+/*DELETE ACCOUNT
     // => findOneById
     // => delete * where if
-
-//SIGNUP
+*/
   //recupere email et password
   //enregistre : insert into 
 
-//MODIFY ACCOUNT INFORMATION
+/*MODIFY ACCOUNT INFORMATION
   //recupere les infos a modifier
   // => findOneById
   // => enregistre : insert into where id 
+*/
 
-//DELETE ACCOUNT
-  // => findOneById
-  // => delete * where if
-  
 
 
