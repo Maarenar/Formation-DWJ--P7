@@ -58,7 +58,7 @@ User.findOneByEmail = (email, result) => {
       return;
     }
 
-    // not found User with the email
+  
     result({ kind: "not_found" }, null);
   });
 };
