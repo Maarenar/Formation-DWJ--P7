@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Mon compte - Groupomania</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,13 +16,15 @@
         </header>
         <main>
             <div class="page-container" id="user-page">
-                <section>
-                    <form>
-                        <label></label>
-                        <input placeholder="Voulez-vous poster quelque chose?">
-                    </form>
-                </section>
-                <section id="feed">
+                <section id="feed-container">
+                    <div id="post-something">
+                        <form>
+                            <label></label>
+                            <input placeholder="Voulez-vous poster quelque chose?">
+                        </form>
+                    </div>
+                    <div id="feed">
+                    </div>
                 </section>
                 <section id="user">
                     <div>
@@ -45,17 +46,5 @@
         </footer>
         <script src="js/utils.js"></script>
         <script src="js/account.js"></script>
-        <script>
-            /*window.addEventListener("load", () => {
-                function loadData() {
-                    apiCall(GET,"http://localhost:3000/api/1", {
-                    }).then(data =>{
-                        console.log(data);
-                    }).catch(err =>{
-                        console.log(err);
-                    });
-                }
-            })*/
-        </script>
     </body>
 </html>

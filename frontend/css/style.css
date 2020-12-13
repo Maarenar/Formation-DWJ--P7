@@ -293,6 +293,7 @@ header .logo-container img {
 
 #user-page {
   display: flex;
+  min-height: 700px;
 }
 @media all and (max-width: 576px) {
   #user-page {
@@ -301,16 +302,31 @@ header .logo-container img {
   }
 }
 
-#feed {
+#feed-container {
   width: 80%;
+}
+#feed-container #post-something {
+  padding-top: 50px;
+}
+#feed-container #post-something input {
+  display: block;
+  margin: auto;
+  width: 40%;
+  padding: 10px;
+  font-size: 15px;
+  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: none;
+}
+#feed-container #feed {
   position: relative;
 }
 @media all and (max-width: 576px) {
-  #feed {
+  #feed-container #feed {
     width: 100%;
   }
 }
-#feed .post-container {
+#feed-container #feed .post-container {
   background-color: #fff;
   width: 80%;
   margin: 50px auto 50px auto;
@@ -318,60 +334,60 @@ header .logo-container img {
   padding: 50px;
 }
 @media all and (max-width: 576px) {
-  #feed .post-container {
+  #feed-container #feed .post-container {
     width: 95%;
     margin-top: 25px;
     padding: 10px;
   }
 }
-#feed .post-container .author-content {
+#feed-container #feed .post-container .author-content {
   display: flex;
   align-items: center;
 }
-#feed .post-container .author-content .author-name {
+#feed-container #feed .post-container .author-content .author-name {
   font-weight: 500;
   margin-right: 5px;
 }
-#feed .post-container .post-content {
+#feed-container #feed .post-container .post-content {
   border-bottom: 1px solid #eaedf3;
   padding: 20px;
 }
-#feed .post-container .liking-and-commenting {
+#feed-container #feed .post-container .liking-and-commenting {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
-#feed .post-container .liking-and-commenting .liking p {
+#feed-container #feed .post-container .liking-and-commenting .liking p {
   display: inline;
   margin-right: 5px;
 }
-#feed .post-container .liking-and-commenting .liking .likes-number {
+#feed-container #feed .post-container .liking-and-commenting .liking .likes-number {
   font-weight: 400;
 }
-#feed .post-container .liking-and-commenting .far {
+#feed-container #feed .post-container .liking-and-commenting .far {
   font-size: 30px;
 }
-#feed .post-container .liking-and-commenting .far:hover {
+#feed-container #feed .post-container .liking-and-commenting .far:hover {
   cursor: pointer;
 }
-#feed .post-container .post-coms {
+#feed-container #feed .post-container .post-coms {
   margin-top: 20px;
 }
-#feed .post-container .post-coms > div span, #feed .post-container .post-coms > div p {
+#feed-container #feed .post-container .post-coms > div span, #feed-container #feed .post-container .post-coms > div p {
   display: inline;
   margin-right: 5px;
 }
-#feed .post-container .post-coms > div:hover {
+#feed-container #feed .post-container .post-coms > div:hover {
   cursor: pointer;
 }
-#feed .post-container .post-coms .com-author {
+#feed-container #feed .post-container .post-coms .com-author {
   font-weight: 400;
 }
-#feed .post-container .post-coms .see-more {
+#feed-container #feed .post-container .post-coms .see-more {
   font-weight: 500;
   font-size: 20px;
 }
-#feed .post-container .post-coms .see-more:hover {
+#feed-container #feed .post-container .post-coms .see-more:hover {
   cursor: pointer;
 }
 
