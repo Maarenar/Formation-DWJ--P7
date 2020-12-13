@@ -9,19 +9,18 @@ const User = function(user) {
   this.department   = user.department
 }; 
 
-User.create = (email, password, lastname, firstname, department) => {
-  sql.query(`INSERT INTO gp_users (email, password, lastname, firstname, department) VALUES ( ${email} )`, (err,res) =>{
+//CRÉATION D'UN NOUVEL UTILISATEUR
+User.create = (newUser, result) => {
+  sql.query("INSERT INTO gp_users SET ?", newUser, (err,res) => {
     if(err) {
       console.log("error: ", err);
       result(err, null);
       return;
-    }
+    } 
 
-    if(res.length) {
-      console.log("Utilisateur cree:", res[0]);
-      result(null, res[0]);
-      return;
-    }
+    console.log("created user:", {id: res.insertId, ...newUser});
+    result(null, { id: res.insertId, ...newUser });
+    return;
   });
 };
 
@@ -45,11 +44,9 @@ User.findOneById = (userId, result) => {
     });
   };
 
-
-
-/*//TROUVER UN UTILISATEUR AVEC SON EMAIL
+//TROUVER UN UTILISATEUR AVEC SON EMAIL
 User.findOneByEmail = (email, result) => {
-  sql.query(`SELECT * FROM gp_users WHERE email = ${email}`, (err, res) => {
+  sql.query("SELECT * FROM gp_users WHERE email = ?", email, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -64,16 +61,7 @@ User.findOneByEmail = (email, result) => {
     // not found User with the email
     result({ kind: "not_found" }, null);
   });
-};*/
-
-
-
-//ajouter un utilisateur
-  //INSERT INTO
-//EDITER UN utilisateur
-  //UPDATE SET
-//supprimer un utilisateur
-  //DELETE
+};
 
 module.exports = User;
 
