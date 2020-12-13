@@ -1,36 +1,30 @@
-/*function userLogIn(){
-    //Get user login infos
-    let userFormData = document.getElementsById('login-form');
-    let existingUser = {
-        email       : userFormData[0].value,
-        password    : userFormData[1].value
-    }
+window.addEventListener("load", () =>{
 
-    //Send user login infos
-    request('POST', 'https://localhost:3000/api/login', function(response) {
-        console.log("resp",response);
-    }, 
-    existingUser);
+    function userSignup(lastname, firstname, email, password, department) {
+        apiCall('POST', "localhost:3000/api/signup", {
+            lastname    : lastname,
+            firstname   : firstname,
+            email       : email,
+            password    : password,
+            department  : department
+        })
+        .then(data => {
+            alert(data);
+            //rediriger vers account.html avec l'id de l'utilisateur
+        }).catch(err => {
+            alert(err);
+        });
+    };
 
-    window.open('./account/id');//l'id sera recupéré grâce à la réponse du serveur : response.id
-}
+    oid('signup-btn').addEventListener("click", (e) => {
+        e.preventDefault();
+        let lastname    = oid('lastname').value     ;
+        let firstname   = oid('firstname').value    ;
+        let email       = oid('email').value        ;
+        let password    = oid('password').value     ;
+        let department  = oid('department').value   ;
 
-function userSignin() {
-    //Get user signin infos
-    let userFormData = document.getElementById('signin-form');
-    let newUser = {
-        lastname    : userFormData[0].value,
-        firstname   : userFormData[1].value,
-        email       : userFormData[2].value,
-        password    : userFormData[3].value,
-        department  : userFormData[4].value,
-    }
+        userSignup(lastname, firstname,email,password,department);
+    });
 
-    //Send user signin infos
-    request('POST', 'https://localhost:3000/api/signup', function(response) {
-        console.log("resp",response);
-    }, 
-    newUser);
-
-    window.open('./account/id');//l'id sera récuperé grâce à la réponse du serveur : response.id
-}*/
+});

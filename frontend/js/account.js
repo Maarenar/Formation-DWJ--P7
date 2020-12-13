@@ -1,14 +1,8 @@
-//RECUPERE LES DONNEES UTILISATEUR
-fetch('http://localhost:3000/api/1')
-    .then(response => response.json())
-    .then(userInfo => displayUserInfo(userInfo))
+/*apiCall('GET','http://localhost:3000/api/:userId', function(userInfo){ //le userId est transmis dans l'url par la fonction signup ou login
+    displayUserInfo(userInfo);
+});*/
 
-//RECUPERE LES POSTS
-fetch('http://localhost:3000/api/posts/1')
-    .then(response => response.json())
-    .then(postInfos => displayPost(postInfos))
-
-//FONCTION POUR AFFICHER LES DONNÉES UTILISATEUR
+/*//FONCTION POUR AFFICHER LES DONNÉES UTILISATEUR
 function displayUserInfo(userInfo) {
     //let profilePic = document.getElementById('profile-pic');
     let userName = document.getElementById('user-name');
@@ -19,9 +13,9 @@ function displayUserInfo(userInfo) {
     userName.innerText = `${userInfo.firstname}` + ' ' + `${userInfo.lastname}`;//createName();
     userEmail.innerText = `${userInfo.email}`;//userInfo.email;
     userDepartment.innerText = `${userInfo.department}`//userInfo.department;
-}
+}*/
 
-//FONCTION CREATION D'UN BLOCK POST
+/*//FONCTION CREATION D'UN BLOCK POST
 function displayPost(postInfos) {
     //container du post
     let postContainer = document.createElement('div');
@@ -49,14 +43,6 @@ function displayPost(postInfos) {
     postContainer.append(authorContent,postContent);
 
 document.getElementById('feed').appendChild(postContainer);
-}
-
-//AJOUTER/RETIRER UN LIKE AU POST
-
-//COMMENTER LE POST
-
-//AFFICHER TOUS LES COMMENTAIRES
-
-//AFFICHER LA SUITE D'UN COMMENTAIRE LONG
+}*/
 
 
