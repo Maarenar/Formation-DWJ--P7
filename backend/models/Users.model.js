@@ -45,23 +45,52 @@ User.create = (newUser, result) => {
 
 //TROUVER UN UTILISATEUR AVEC SON ID
 User.findOneById = (userId, result) => {
-    sql.query(`SELECT * FROM gp_users WHERE userId = ${userId}`, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return; 
+  sql.query("SELECT * FROM gp_users WHERE userId = ?", userId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+      } else if(res.length === 0) {
+      console.log("utilisateur non trouvé:",  res.length );
+      result(null, res.length);
+      return;
+    } else if(res.length > 0){
+      console.log("utilisateur trouvé: ", res[0].firstname);
+      result(null, res[0].firstname);
+      return;
+    }
+  });
+};
+
+//SUPPRIME UN UTILISATEUR AVEC SON ID
+User.deleteProfile = (userId, result) => {
+  sql.query("DELETE FROM gp_users WHERE userId = ?", userId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+      } else{ 
+      console.log("utilisateur supprimé:",  res.affectedRows );
+      result(null, res.affectedRows);
+      return;
       }
-  
-      if (res.length) {
-        console.log("found user: ", res[0]);
-        result(null, res[0]);
-        return;
+  });
+};
+
+//MODIFIE UN UTILISATEUR AVEC SON ID
+User.editProfile = (userId, result) => {
+  sql.query("DELETE FROM gp_users WHERE userId = ?", userId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+      } else{ 
+      console.log("utilisateur supprimé:",  res.affectedRows );
+      result(null, res.affectedRows);
+      return;
       }
-  
-      // not found User with the id
-      result({ kind: "not_found" }, null);  
-    });
-  };
+  });
+};
 
 
 

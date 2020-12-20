@@ -4,11 +4,11 @@ const User = require('../models/Users.model');
 
 //FONCTION DE CRÉATION D'UN COMPTE UTILISATEUR (SIGNUP)
 exports.signup = (req, res, next) => {
-  let email     = req.body.email;
-  let password  = req.body.password;
-  let lastname  = req.body.lastname;
-  let firstname = req.body.firstname;
-  let department  = null;
+  let email       = req.body.email;
+  let password    = req.body.password;
+  let lastname    = req.body.lastname;
+  let firstname   = req.body.firstname;
+  let department  = '';
   if (!req.body.department){
     department = '';
   }else{
@@ -47,49 +47,46 @@ exports.signup = (req, res, next) => {
   })
 };
 
-/*//FONCTION DE CONNEXION (LOGIN)
-exports.login = (req,res) => {
-  let email     = req.body.email ? req.body.email : data.body.email;
-  let password  = req.body.password ? req.body.password : data.body.password;
-    User.findOneByEmail(email,(err, data) => {
-      if (err) {
-        return res.status(401).json({ error : 'Utilisateur inconnu!'})
-      } else {
-      bcrypt.compare(password, userPass )// on compare les mots de passe
-      .then(valid => {
-        if(!valid){
-            return res.status(401).json({ error : 'Mot de passe incorrect!'})
-        }
-        res.status(200).json({// on renvoie un token valable 24h
-            userId: userId,
-            token: jwt.sign(
-                { userId: userId },
-                'RANDOM_TOKEN_SECRET',
-                { expiresIn: '24h' }, 
-            )
-        })
-      })
-      .catch(error => res.status(500).json({ error }));
-      }
-    })     
-};*/
-
 //RÉCUPERE TOUTES LES INFORMATIONS D'UN UTILISATEUR -> AFFICHER LE PROFIL
 exports.userProfile = (req, res, next) => {
-    User.findOneById(req.params.userId, (err, data) => {
+  let userId = req.params.userId;
+    User.findOneById(userId, (err, data) => {
       if (err) {
-        if (err.kind === "not_found") {
-          res.status(404).send({
-            message: "L'utilisateur n'existe pas"
-          });
-        } else {
-          res.status(500).send({
-            message: "erreur"
-          });
-        }
-      } else res.send(data);
+        return res.status(500).json({ error : 'Erreur du serveur'});
+        } else if(data > 0) {
+          return res.status(200).json({"Utilisateur" : data});
+        } else if(data === 0) {
+          return res.status(401).json({error : 'Connexion nécessaire'});
+        } 
     });
 };
+
+//SUPPRIME UN COMPTE UTILISATEUR
+exports.deleteProfile = (req, res, next) => {
+  let userId = req.params.userId;
+  User.deleteProfile(userId, (err, data)=>{
+    if(err){
+      console.log(err);
+      return res.status(500).json({ error : 'Erreur du serveur'});
+    } else {
+      console.log(data);
+      return res.status(200).json({"Compte supprimé" : data});
+    }
+  });
+}
+
+//MODIFIER UN COMPTE UTILISATEUR
+exports.editProfile = (req,res,next) => {
+  User.editProfile(userId, (err, data)=>{
+    if(err){
+      console.log(err);
+      return res.status(500).json({ error : 'Erreur du serveur'});
+    } else {
+      console.log(data);
+      return res.status(200).json({"Compte modifié" : data});
+    }
+  });
+}
 
 
 
