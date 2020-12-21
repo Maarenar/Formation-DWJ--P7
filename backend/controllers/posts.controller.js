@@ -1,51 +1,36 @@
-const { getOnePost } = require('../models/Posts.models');
 const Post = require('../models/Posts.models');
 
 //AFFICHER UN POST AVEC : NOM ET PRENOM DE L'AUTEUR, CONTENU DU POST, COMMENTAIRE : CONTENU + NOM ET PRENOM DE L'AUTEUR
-exports.getOnePost = (req, res, next) => {
-  let postId = req.params.postId;
-  Post.getOnePost(postId, (err, data) => {
+exports.getAllPosts = (req, res, next) =>{
+  Post.getAll((err, data) => {
     if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: "Post inexistant"
+      return res.status(500).json({ error : 'Erreur du serveur'});
+    } else {
+      data.forEach(element => {
+        let userId = element.userId;
+        let postId = element.postId;
+        Post.getAuthor(userId, (err, data) =>{
+          if(err){
+            return res.status(500).json({ error : 'Erreur du serveur'});
+          }else {
+            let author= JSON.stringify(data);
+            console.log("auteur: ", author);
+            //return res.status(200).json({"auteur" : author});
+          }
         });
-      } else {
-        res.status(500).send({
-          message: "erreur"
-        });
-      }
-    } else console.log(data);
+        Post.getComments(postId, (err,data)=>{
+          if(err){
+            return res.status(500).json({ error : 'Erreur du serveur'});
+          } else { 
+            let comments = JSON.stringify(data);
+            console.log("commentaires : ", comments);
+            //return res.status(200).json({"commentaires" : comments});
+          }
+        })
+      });
+    }
   });
-
-  Post.getAuthorName(postId, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: "Auteur inexistant"
-        });
-      } else {
-        res.status(500).send({
-          message: "erreur"
-        });
-      } 
-    } else console.log(data);
-  });
-
-  Post.getPostComments(postId, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: "Commentaire inexistant"
-        });
-      } else {
-        res.status(500).send({
-          message: "erreur"
-        });
-      }
-    } else console.log(data);
-  });
-};
+}
 
 /*//AFFICHER TOUS LES POSTS AVEC : NOM ET PRENOM DE L'AUTEUR, CONTENU DU POST, COMMENTAIRE : CONTENU + NOM ET PRENOM DE L'AUTEUR POUR CHAQUE POST
 exports.getAllPosts = (req, res, next) => {

@@ -55,8 +55,8 @@ User.findOneById = (userId, result) => {
       result(null, res.length);
       return;
     } else if(res.length > 0){
-      console.log("utilisateur trouvé: ", res[0].firstname);
-      result(null, res[0].firstname);
+      console.log("utilisateur trouvé: ", res[0].userId);
+      result(null, res[0].userId);
       return;
     }
   });
@@ -78,8 +78,8 @@ User.deleteProfile = (userId, result) => {
 };
 
 //MODIFIE UN UTILISATEUR AVEC SON ID
-User.editProfile = (userId, result) => {
-  sql.query("DELETE FROM gp_users WHERE userId = ?", userId, (err, res) => {
+User.editProfile = ([email,lastname,firstname,department, userId], result) => {
+  sql.query("UPDATE gp_users SET email = ?, lastname = ?, firstname = ?, department = ?  WHERE userId = ?", [email,lastname,firstname,department, userId] , (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);

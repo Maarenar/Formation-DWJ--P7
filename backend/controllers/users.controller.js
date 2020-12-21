@@ -44,7 +44,7 @@ exports.signup = (req, res, next) => {
       })
       .catch(error => res.status(500).json({ error }));
     }
-  })
+  }) 
 };
 
 //RÉCUPERE TOUTES LES INFORMATIONS D'UN UTILISATEUR -> AFFICHER LE PROFIL
@@ -77,7 +77,12 @@ exports.deleteProfile = (req, res, next) => {
 
 //MODIFIER UN COMPTE UTILISATEUR
 exports.editProfile = (req,res,next) => {
-  User.editProfile(userId, (err, data)=>{
+  let userId      = req.params.userId;
+  let email       = req.body.email;
+  let lastname    = req.body.lastname;
+  let firstname   = req.body.firstname;
+  let department  = '';
+  User.editProfile([email,lastname,firstname,department, userId], (err, data)=>{
     if(err){
       console.log(err);
       return res.status(500).json({ error : 'Erreur du serveur'});
