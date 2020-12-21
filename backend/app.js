@@ -14,16 +14,14 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json()); 
 
-
 const usersRoutes = require('./routes/users.routes');
 app.use('/api/users', usersRoutes);
 
 const postsRoutes = require('./routes/posts.routes');
 app.use('/api/posts', postsRoutes);
 
-/*
-const commentsRoutes    = require('./routes/comments.routes');
-app.use('/api/comments', commentsRoutes);*/
 
+const commentsRoutes = require('./routes/comments.routes');
+app.use('/api/comments', commentsRoutes);
 
 module.exports = app; 

@@ -52,11 +52,11 @@ exports.userProfile = (req, res, next) => {
   let userId = req.params.userId;
     User.findOneById(userId, (err, data) => {
       if (err) {
+        console.log(err);
         return res.status(500).json({ error : 'Erreur du serveur'});
-        } else if(data > 0) {
+        } else {
+          console.log(data);
           return res.status(200).json({"Utilisateur" : data});
-        } else if(data === 0) {
-          return res.status(401).json({error : 'Connexion nécessaire'});
         } 
     });
 };
@@ -64,7 +64,7 @@ exports.userProfile = (req, res, next) => {
 //SUPPRIME UN COMPTE UTILISATEUR
 exports.deleteProfile = (req, res, next) => {
   let userId = req.params.userId;
-  User.deleteProfile(userId, (err, data)=>{
+  User.deleteProfile(userId, (err, data) =>{
     if(err){
       console.log(err);
       return res.status(500).json({ error : 'Erreur du serveur'});

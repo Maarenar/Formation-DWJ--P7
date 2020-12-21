@@ -16,13 +16,28 @@ User.findOneByEmail = (email, result) => {
       console.log("error: ", err);
       result(err, null);
       return;
-      } else if(res.length === 0) {
+      } else if (res.length === 0) {
       console.log("utilisateur non trouvé:",  res.length );
       result(null, res.length);
       return;
-    } else if(res.length > 0){
+    } else if (res.length > 0){
       console.log("utilisateur trouvé:", res.length);
       result(null, res.length);
+      return;
+    }
+  });
+};
+
+//TROUVER UN UTILISATEUR AVEC SON ID
+User.findOneById = (userId, result) => {
+  sql.query("SELECT * FROM gp_users WHERE userId = ?", userId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      console.log("utilisateur" , res);
+      result(null, res);
       return;
     }
   });
@@ -35,7 +50,7 @@ User.create = (newUser, result) => {
       console.log("error: ", err);
       result(err, null);
       return;
-    } else{
+    } else {
       console.log("created user:", res.insertId);
       result(null, res.insertId);
       return;
@@ -43,24 +58,6 @@ User.create = (newUser, result) => {
   });   
 };
 
-//TROUVER UN UTILISATEUR AVEC SON ID
-User.findOneById = (userId, result) => {
-  sql.query("SELECT * FROM gp_users WHERE userId = ?", userId, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-      } else if(res.length === 0) {
-      console.log("utilisateur non trouvé:",  res.length );
-      result(null, res.length);
-      return;
-    } else if(res.length > 0){
-      console.log("utilisateur trouvé: ", res[0].userId);
-      result(null, res[0].userId);
-      return;
-    }
-  });
-};
 
 //SUPPRIME UN UTILISATEUR AVEC SON ID
 User.deleteProfile = (userId, result) => {
@@ -69,7 +66,7 @@ User.deleteProfile = (userId, result) => {
       console.log("error: ", err);
       result(err, null);
       return;
-      } else{ 
+      } else { 
       console.log("utilisateur supprimé:",  res.affectedRows );
       result(null, res.affectedRows);
       return;
