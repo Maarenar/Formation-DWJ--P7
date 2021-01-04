@@ -9,28 +9,43 @@ const Comment = function(comment) {
 };
 
 
-//TROUVER TOUS LES POSTS
-Comment.getCommentsOnPost = (postId, result) => {
-  sql.query("SELECT * FROM comments WHERE postId = ?" , postId ,(err, res) => {
-    if (err) {
-      console.log("error: ", err);
+//AJOUTER UN COMMENTAIRE DANS LA BDD
+Comment.createComment = (newComment, result) => {
+  sql.query("INSERT INTO comments SET ? ", newComment, (err,res)=>{
+    if(err){
       result(err, null);
       return;
-    } else{
-      console.log(res);
+    } else {
+      result(null, res);
+      return;
+    }
+  })
+}
+
+//MODIFIER UN COMMENTAIRE
+Comment.modifyComment = ([commentId, content], result) => {
+  sql.query(`UPDATE comments SET content = '${content}' WHERE commentId = '${commentId}'`, (err, res)=>{
+    if(err){
+      result(err, null);
+      return;
+    } else {
       result(null,res);
       return;
     }
+  })
+}
+
+//SUPPRIME UN COMMENTAIRE
+Comment.deleteComment = (commentId, result) => {
+  sql.query("DELETE FROM comments WHERE commentId = ?", commentId, (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+      } else {
+      result(null, res);
+      return;
+      }
   });
 };
-
-//POST COMMENT
-//INSERT INTO comments VALUES ()
-
-//EDIT COMMENT
-  //UPDATE comments SET content = '' WHERE  commentId =  (recuperer l'id du comment)
-
-//DELETE COMMENT
-  //DELETE FROM comments WHERE commentId = (recuperer l'id du comment)
 
   module.exports = Comment;

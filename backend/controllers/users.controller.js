@@ -8,17 +8,13 @@ exports.signup = (req, res, next) => {
   let password    = req.body.password;
   let lastname    = req.body.lastname;
   let firstname   = req.body.firstname;
-  let department  = '';
-  if (!req.body.department){
-    department = '';
-  }else{
-    department = req.body.department;
-  }
+  let department  = req.body.department ? req.body.department : '';
+  
   //vérification que tous les champs sont remplis
   if(!email || !password || !lastname || !firstname){
     return res.status(400).send({ message: "Tous les champs doivent être remplis" });
   }
-  //vérification que l'email n'est pas deja utilisé 
+  //vérification que l'email n'est pas déjà utilisé 
   User.findOneByEmail(email, (err, data) => { 
     if(err){
         return res.status(500).json({ error : 'Erreur du serveur'})
@@ -38,13 +34,49 @@ exports.signup = (req, res, next) => {
           if(err){
             return res.status(500).json({ error : 'Erreur du serveur'});
           } else {
-            return res.status(201).json({"Utilisateur" : data});
+            user_Id = data;
+            console.log(data);
+            return res.status(201).json({
+              token: jwt.sign(
+                { userId: user_Id },
+                'RANDOM_TOKEN_SECRET',
+                { expiresIn: '24h' }
+              )
+            });
           }
         });
       })
       .catch(error => res.status(500).json({ error }));
     }
   }) 
+};
+
+//FONCTION DE LOGIN
+exports.login = (req, res, next) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  User.findOneByEmail(email, (err,data) => {
+    if (err) {
+      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+    } else {
+      let userPassword = data[0].password;
+      let user_Id = data[0].userId;
+      bcrypt.compare(password, userPassword)
+      .then(data => {
+        if (!data) {
+          return res.status(401).json({ error: 'Mot de passe incorrect !' });
+        }
+        res.status(200).json({
+          token: jwt.sign(
+            { userId: user_Id },
+            'RANDOM_TOKEN_SECRET',
+            { expiresIn: '24h' }
+          )
+        });
+      })
+      .catch(error => console.log(error));
+    }
+  }); 
 };
 
 //RÉCUPERE TOUTES LES INFORMATIONS D'UN UTILISATEUR -> AFFICHER LE PROFIL
@@ -63,7 +95,7 @@ exports.userProfile = (req, res, next) => {
 
 //SUPPRIME UN COMPTE UTILISATEUR
 exports.deleteProfile = (req, res, next) => {
-  let userId = req.params.userId;
+  let userId = req.body.userId;
   User.deleteProfile(userId, (err, data) =>{
     if(err){
       console.log(err);
@@ -76,19 +108,17 @@ exports.deleteProfile = (req, res, next) => {
 }
 
 //MODIFIER UN COMPTE UTILISATEUR
-exports.editProfile = (req,res,next) => {
-  let userId      = req.params.userId;
+exports.editProfile = (req,res) => {
+  let userId      = req.body.userId;
   let email       = req.body.email;
   let lastname    = req.body.lastname;
   let firstname   = req.body.firstname;
-  let department  = '';
-  User.editProfile([email,lastname,firstname,department, userId], (err, data)=>{
+  let department  = req.body.department ? req.body.department : '';
+  User.editProfile([email,lastname,firstname,department, userId], (err, data) =>{
     if(err){
-      console.log(err);
       return res.status(500).json({ error : 'Erreur du serveur'});
     } else {
-      console.log(data);
-      return res.status(200).json({"Compte modifié" : data});
+      return res.status(203).json("Information mises à jour ");
     }
   });
 }
