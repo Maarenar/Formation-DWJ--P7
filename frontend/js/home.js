@@ -7,13 +7,8 @@ window.addEventListener("load", () =>{
             email       : email,
             password    : password,
             department  : department
-        })
-        .then(data => {
-            alert(data);
-            //rediriger vers account.html avec l'id de l'utilisateur
-        }).catch(err => {
-            alert(err);
         });
+         console.log('yo');
     };
 
     oid('signup-btn').addEventListener("click", (e) => {
