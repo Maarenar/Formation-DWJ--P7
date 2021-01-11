@@ -7,7 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.0/css/all.css" integrity="sha384-73lvm+n3qtrHBHjfLuMY7kIL3CdwrRc5jqCtzWASs6MshmR6Tq2veVBC5OVkSwEF" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/account.js"></script>
     </head>
     <body>
         <header>
@@ -45,7 +46,19 @@
                 <p>&#xA9 2020</p>
             </div>
         </footer>
-        <script src="js/utils.js"></script>
-        <script src="js/account.js"></script>
+        <script type="text/javascript">
+           function request(){
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                        if(this.readyState == 4 && [200, 201].indexOf(this.status) !== false) {
+                            let response = (JSON.parse(this.responseText));
+                            console.log(response);
+                        }
+                    }
+                xhttp.open("POST", "http://localhost:3000/api/users/signup");
+                xhttp.send();
+           };
+           request();
+        </script>
     </body>
 </html>

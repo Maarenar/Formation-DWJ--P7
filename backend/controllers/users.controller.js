@@ -4,6 +4,7 @@ const User = require('../models/Users.model');
 
 //FONCTION DE CRÉATION D'UN COMPTE UTILISATEUR (SIGNUP)
 exports.signup = (req, res, next) => {
+  let form        = req.body;
   let email       = req.body.email;
   let password    = req.body.password;
   let lastname    = req.body.lastname;
@@ -12,13 +13,13 @@ exports.signup = (req, res, next) => {
   
   //vérification que tous les champs sont remplis
   if(!email || !password || !lastname || !firstname){
-    return res.status(400).send({ message: "Tous les champs doivent être remplis" });
+    return res.status(400).send({ message: "Tous les champs doivent être remplis", form: `${form}`, email : `${email}`});
   }
   //vérification que l'email n'est pas déjà utilisé 
   User.findOneByEmail(email, (err, data) => { 
     if(err){
         return res.status(500).json({ error : 'Erreur du serveur'})
-    } else if(data === 1){
+    } else if(data > 0){
       return res.status(409).json({error : 'L\'utilisateur existe déjà'})
     } else {
       bcrypt.hash(password, 10)
@@ -35,13 +36,13 @@ exports.signup = (req, res, next) => {
             return res.status(500).json({ error : 'Erreur du serveur'});
           } else {
             user_Id = data;
-            console.log(data);
             return res.status(201).json({
               token: jwt.sign(
                 { userId: user_Id },
                 'RANDOM_TOKEN_SECRET',
                 { expiresIn: '24h' }
-              )
+              ),
+
             });
           }
         });
@@ -61,6 +62,7 @@ exports.login = (req, res, next) => {
     } else {
       let userPassword = data[0].password;
       let user_Id = data[0].userId;
+      console.log(userPassword, user_Id);
       bcrypt.compare(password, userPassword)
       .then(data => {
         if (!data) {
@@ -114,15 +116,15 @@ exports.editProfile = (req,res) => {
   let lastname    = req.body.lastname;
   let firstname   = req.body.firstname;
   let department  = req.body.department ? req.body.department : '';
-  User.editProfile([email,lastname,firstname,department, userId], (err, data) =>{
-    if(err){
-      return res.status(500).json({ error : 'Erreur du serveur'});
-    } else {
-      return res.status(203).json("Information mises à jour ");
-    }
+
+  bcrypt.hash(req.body.password, 10)
+  .then(hash=>{
+    User.editProfile([email,hash,lastname,firstname,department, userId], (err, data) =>{
+      if(err){
+        return res.status(500).json({ error : 'Erreur du serveur'});
+      } else {
+        return res.status(203).json("Information mises à jour ");
+      }
+    });
   });
 }
-
-
-
-

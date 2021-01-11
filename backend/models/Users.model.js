@@ -11,17 +11,16 @@ const User = function(user) {
 
 //TROUVER UN UTILISATEUR AVEC SON EMAIL
 User.findOneByEmail = (email, result) => {
-  sql.query("SELECT * FROM gp_users WHERE email = ?", email, (err, res) => {
+  sql.query("SELECT * FROM gp_users WHERE email = ? " , email, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
       } else if (res.length === 0) {
-      console.log("utilisateur non trouvé:",  res);
       result(null, res.length);
       return;
     } else if (res.length > 0){
-      result(null, res);
+      result(null, res.length);
       return;
     }
   });
@@ -74,19 +73,19 @@ User.deleteProfile = (userId, result) => {
 };
 
 //MODIFIE UN UTILISATEUR AVEC SON ID
-User.editProfile = ([email,lastname,firstname,department, userId], result) => {
-  sql.query(`UPDATE gp_users SET email = '${email}', lastname = '${lastname}', firstname = '${firstname}', department = '${department}'  WHERE userId = '${userId}'`, (err, res) => {
+User.editProfile = ([email,password,lastname,firstname,department, userId], result) => {
+  sql.query(`UPDATE gp_users SET email = '${email}', password = '${password}',lastname = '${lastname}', firstname = '${firstname}', department = '${department}'  WHERE userId = '${userId}'`, (err, res) => {
     if (err) {
       result(err, null);
+      console.log(err);
       return;
       } else { 
       result(null, res);
+      console.log(res);
       return;
       }
   });
 };
-
-
 
 module.exports = User;
 
