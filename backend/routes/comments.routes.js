@@ -3,10 +3,8 @@ const router = express.Router();
 
 const commentsCtrl = require('../controllers/comments.controller');
 
-router.get('/postComments/:postId', commentsCtrl.getComments);
-
-/*router.post('/', auth , postsCtrl.createComment);
-router.put('/:id', auth , postsCtrl.updateComment);
-router.delete('/:id', auth , postsCtrl.deleteComemnt);*/
+router.post('/', commentsCtrl.createComment);
+router.put('/', commentsCtrl.modifyComment);
+router.delete('/', commentsCtrl.deleteComment);
 
 module.exports = router;

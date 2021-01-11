@@ -8,6 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.0/css/all.css" integrity="sha384-73lvm+n3qtrHBHjfLuMY7kIL3CdwrRc5jqCtzWASs6MshmR6Tq2veVBC5OVkSwEF" crossorigin="anonymous">
+        <script type="text/javascript" src="./js/ui.js"></script>
+        <script type="text/javascript" src="./js/utils.js"></script>
     </head>
     <body>
         <header>
@@ -18,12 +20,12 @@
         <main class="home-container">
             <div id="login-form" class="hide">
                 <i onclick="openLoginForm()" class="fas fa-times"></i>
-                <form action="">
+                <form method="post" action="http://localhost:3000/api/users/login">
                     <label for="email"></label>
-                    <input type="email" name="email" placeholder="email">
+                    <input type="email" id="email" placeholder="email">
                     <label for="password"></label>
-                    <input type="password" name="password" placeholder="password">
-                    <button type="submit" class="btn main-btn" onclick="userLogIn()">Connexion</button>
+                    <input type="password" id="password" placeholder="password">
+                    <button type="submit" class="btn main-btn">Connexion</button>
                 </form>
                 <a href="./reset-pswd.html"><button class="btn secondary-btn">Mot de passe oublié</button></a>
             </div>
@@ -45,25 +47,25 @@
                         <div id="signin-form" class="not-show">
                             <i onclick="openSigninForm()" class="fas fa-times"></i>
                             <p>Créez votre compte</p>
-                            <form id="signup-form">
+                            <form method='post' action='http://localhost:3000/api/users/signup' id="signup-form">
                                 <div>
                                     <label for="lastname"></label>
-                                    <input type="text" id="lastname" placeholder="Nom">
+                                    <input type="text" name="lastname" placeholder="Nom">
                                     <label for="firstname"></label>
-                                    <input type="text" id="firstname" placeholder="Prénom">
+                                    <input type="text" name="firstname" placeholder="Prénom">
                                 </div>
                                 <div class="email-and-psw">
                                     <label for="email"></label>
-                                    <input type="email" id="email" placeholder="Email">
+                                    <input type="email" name="email" placeholder="Email">
                                     <div class="psw-section">
                                         <label for="password"></label>
-                                        <input type="password" id="password" placeholder="Mot de passe">
+                                        <input type="password" name="password" placeholder="Mot de passe">
                                         <i class="fas fa-eye" onclick="showPassword()"></i>
                                     </div>
                                 </div>
                                 <label for="department"></label>
-                                <input type="text" id="department" placeholder="Département">
-                                <button class="btn main-btn" id="signup-btn">S'inscrire</button>
+                                <input type="text" name="department" placeholder="Département">
+                                <button type="submit" class="btn main-btn" id="signup-btn">S'inscrire</button>
                             </form>
                         </div>
                     </div>
@@ -76,8 +78,5 @@
                 <p>&#xA9 2020</p>
             </div>
         </footer>
-        <script type="text/javascript" src="./js/ui.js"></script>
-        <script type="text/javascript" src="./js/utils.js"></script>
-        <script type="text/javascript" src="./js/home.js"></script>
     </body>
 </html>

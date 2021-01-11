@@ -17,29 +17,23 @@ function make(el){
     return document.createElement(el);
 }
 
+
 /**
  * 
  * @param {String} method 
  * @param {String} url 
- * @param {Function} callback 
- * @param {JSON} data 
  */
-function apiCall(method, url, callback, data){
-    // Create a request variable and assign a new XMLHttpRequest object to it.
-    let request = new XMLHttpRequest(); //objet
-    
-    request.onreadystatechange = function(){
-        if(this.readyState == XMLHttpRequest.DONE && [200, 201].indexOf(this.status) !== false){
-            callback(JSON.parse(this.responseText, this.status));
+function request(method, url){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && [200, 201].indexOf(this.status) !== false) {
+                let response = (JSON.parse(this.responseText));
+                return response;
+            }
         }
-    };
-    // Open a new connection, using the GET request on the URL endpoint
-    request.open(method, url);
-    request.setRequestHeader("Content-Type", "application/json");
-    if(method == 'POST'){
-        request.send(JSON.stringify(data));
-    }else{
-        request.send();
-    }
-}
+    xhttp.open(method, url, true);
+    xhttp.send();
+};
 
+
+ 
