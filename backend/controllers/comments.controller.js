@@ -12,39 +12,31 @@ exports.createComment = (req,res,next) =>{
     postId : postId,
     date : date
   });
-  Comment.createComment(newComment, (err,data)=>{
-    if(err){
-      return res.status(500).json({ error : 'Erreur du serveur'});
-    } else {
-      return res.status(201).json({"Commentaire publié " : data});
-    }
-  })
+  Comment.createComment(newComment)
+    .then(response => {
+      return res.status(201).json({"Commentaire publié " : response});
+    })
+    .catch(error => res.status(500).json({ error }));
 }
 
 //EDITER UN COMMENTAIRE
 exports.modifyComment = (req,res,next) => {
   let commentId = req.body.commentId;
   let content = req.body.content;
-  Comment.modifyComment([commentId, content], (err,data) => {
-    if(err){
-      return res.status(500).json({ error : 'Erreur du serveur'});
-    } else {
-      return res.status(201).json({"Commentaire modifié " : data});
-    }
+  Comment.modifyComment([commentId, content])
+  .then(response => {
+    return res.status(201).json({"Commentaire modifié " : response});
   })
+  .catch(error => res.status(500).json({ error }));
 }
 
 //SUPPRIME UN COMMENTAIRE
 exports.deleteComment = (req, res, next) => {
   let commentId = req.body.commentId;
-  Comment.deleteComment(commentId, (err, data) =>{
-    if(err){
-      console.log(err);
-      return res.status(500).json({ error : 'Erreur du serveur'});
-    } else {
-      console.log(data);
-      return res.status(200).json({"Commentaire supprimé " : data});
-    }
-  });
+  Comment.deleteComment(commentId)
+  .then(response =>{
+    return res.status(200).json({"Commentaire supprimé " : response});
+  })
+  .catch(error => res.status(500).json({ error }));
 }
  

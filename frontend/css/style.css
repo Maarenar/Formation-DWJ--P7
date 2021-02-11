@@ -125,10 +125,7 @@ header .logo-container img {
   background-color: #ffffff;
   padding: 50px;
   border-radius: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  display: block;
   top: 10px;
   right: 10px;
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.05);
@@ -140,16 +137,15 @@ header .logo-container img {
     right: 0;
     width: 100%;
     height: 100vh;
-    justify-content: space-around;
     padding: 50px 20px 50px 20px;
   }
 }
-.login-form-show form {
+.login-form-show div {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
 }
-.login-form-show form input {
+.login-form-show div input {
   display: block;
   border-top: none;
   border-right: none;
@@ -159,7 +155,7 @@ header .logo-container img {
   font-size: 20px;
   padding-left: 10px;
 }
-.login-form-show form input:focus {
+.login-form-show div input:focus {
   border: none;
 }
 .login-form-show i {
@@ -226,7 +222,7 @@ header .logo-container img {
   left: 0;
   bottom: 0;
 }
-.signin-form-show form input {
+.signin-form-show > div input {
   font-size: 20px;
   color: #172542;
   border-top: none;
@@ -237,22 +233,22 @@ header .logo-container img {
   padding: 5px;
 }
 @media all and (max-width: 576px) {
-  .signin-form-show form input {
+  .signin-form-show > div input {
     margin-bottom: 15px;
     width: 100%;
   }
 }
 @media all and (max-width: 576px) {
-  .signin-form-show form .email-and-psw {
+  .signin-form-show > div .email-and-psw {
     display: flex;
     flex-direction: column;
   }
 }
-.signin-form-show form .email-and-psw .psw-section {
+.signin-form-show > div .email-and-psw .psw-section {
   position: relative;
   display: inline;
 }
-.signin-form-show form .email-and-psw .psw-section i {
+.signin-form-show > div .email-and-psw .psw-section i {
   font-size: 19px;
   color: #172542;
   position: absolute;
@@ -308,15 +304,27 @@ header .logo-container img {
 #feed-container #post-something {
   padding-top: 50px;
 }
-#feed-container #post-something input {
-  display: block;
-  margin: auto;
+#feed-container #post-something div {
+  position: relative;
   width: 40%;
+  margin: auto;
+}
+#feed-container #post-something div input {
+  display: block;
+  width: 100%;
   padding: 10px;
   font-size: 15px;
   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   border: none;
+}
+#feed-container #post-something div button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 #feed-container #feed {
   position: relative;
@@ -347,48 +355,22 @@ header .logo-container img {
 #feed-container #feed .post-container .author-content .author-name {
   font-weight: 500;
   margin-right: 5px;
+  text-transform: capitalize;
 }
 #feed-container #feed .post-container .post-content {
   border-bottom: 1px solid #eaedf3;
   padding: 20px;
 }
-#feed-container #feed .post-container .liking-and-commenting {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-#feed-container #feed .post-container .liking-and-commenting .liking p {
-  display: inline;
-  margin-right: 5px;
-}
-#feed-container #feed .post-container .liking-and-commenting .liking .likes-number {
-  font-weight: 400;
-}
-#feed-container #feed .post-container .liking-and-commenting .far {
-  font-size: 30px;
-}
-#feed-container #feed .post-container .liking-and-commenting .far:hover {
-  cursor: pointer;
-}
 #feed-container #feed .post-container .post-coms {
   margin-top: 20px;
+  font-size: 14px;
 }
-#feed-container #feed .post-container .post-coms > div span, #feed-container #feed .post-container .post-coms > div p {
-  display: inline;
-  margin-right: 5px;
+#feed-container #feed .post-container .post-coms > div {
+  margin-bottom: 10px;
 }
-#feed-container #feed .post-container .post-coms > div:hover {
-  cursor: pointer;
-}
-#feed-container #feed .post-container .post-coms .com-author {
+#feed-container #feed .post-container .post-coms > div .com-author {
   font-weight: 400;
-}
-#feed-container #feed .post-container .post-coms .see-more {
-  font-weight: 500;
-  font-size: 20px;
-}
-#feed-container #feed .post-container .post-coms .see-more:hover {
-  cursor: pointer;
+  text-transform: capitalize;
 }
 
 #user {
@@ -403,6 +385,10 @@ header .logo-container img {
 #user > div {
   position: fixed;
   top: 144px;
+  border-left: 5px solid white;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 @media all and (max-width: 576px) {
   #user > div {
@@ -426,7 +412,7 @@ header .logo-container img {
 }
 #user #user-name {
   font-weight: 500;
-  margin-top: 20px;
+  text-transform: uppercase;
 }
 @media all and (max-width: 576px) {
   #user #user-name {
@@ -479,6 +465,8 @@ h1 {
   max-width: 1600px;
   position: relative;
   margin: auto;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .new-pswd-container {

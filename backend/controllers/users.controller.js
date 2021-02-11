@@ -4,7 +4,6 @@ const User = require('../models/Users.model');
 
 //FONCTION DE CRÉATION D'UN COMPTE UTILISATEUR (SIGNUP)
 exports.signup = (req, res, next) => {
-  let form        = req.body;
   let email       = req.body.email;
   let password    = req.body.password;
   let lastname    = req.body.lastname;
@@ -13,17 +12,14 @@ exports.signup = (req, res, next) => {
   
   //vérification que tous les champs sont remplis
   if(!email || !password || !lastname || !firstname){
-    return res.status(400).send({ message: "Tous les champs doivent être remplis", form: `${form}`, email : `${email}`});
+    return res.status(400).send({ message: "Tous les champs doivent être remplis"});
   }
   //vérification que l'email n'est pas déjà utilisé 
-  User.findOneByEmail(email, (err, data) => { 
-    if(err){
-        return res.status(500).json({ error : 'Erreur du serveur'})
-    } else if(data > 0){
-      return res.status(409).json({error : 'L\'utilisateur existe déjà'})
-    } else {
+  User.findOneByEmail(email)
+  .then(user => {
+    if(!user){
       bcrypt.hash(password, 10)
-      .then(hash=>{
+      .then(hash => {
         const newUser = new User({
           email : email,
           password : hash,
@@ -31,82 +27,78 @@ exports.signup = (req, res, next) => {
           firstname : firstname,
           department : department
         });
-        User.create(newUser, (err,data)=>{
-          if(err){
-            return res.status(500).json({ error : 'Erreur du serveur'});
-          } else {
-            user_Id = data;
-            return res.status(201).json({
-              token: jwt.sign(
-                { userId: user_Id },
-                'RANDOM_TOKEN_SECRET',
-                { expiresIn: '24h' }
-              ),
-
-            });
-          }
-        });
+        User.create(newUser)
+        .then(user_id => {
+          res.status(200).json({
+            userId: user_id,
+            token: jwt.sign(
+              { userId: user_id },
+              'RANDOM_TOKEN_SECRET',
+              { expiresIn: '24h' }
+            )
+          });
+          })
+          .catch(error => res.status(500).json({ error : 'Erreur du serveur'}))
       })
-      .catch(error => res.status(500).json({ error }));
+    } else {
+      res.status(500).json({ error : 'L\'utilisateur existe déjà' })
     }
-  }) 
+  })
+  .catch(error => res.status(500).json({ error }));  
 };
 
 //FONCTION DE LOGIN
 exports.login = (req, res, next) => {
   let email = req.body.email;
   let password = req.body.password;
-  User.findOneByEmail(email, (err,data) => {
-    if (err) {
-      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-    } else {
-      let userPassword = data[0].password;
-      let user_Id = data[0].userId;
-      console.log(userPassword, user_Id);
-      bcrypt.compare(password, userPassword)
-      .then(data => {
-        if (!data) {
-          return res.status(401).json({ error: 'Mot de passe incorrect !' });
-        }
-        res.status(200).json({
-          token: jwt.sign(
-            { userId: user_Id },
-            'RANDOM_TOKEN_SECRET',
-            { expiresIn: '24h' }
-          )
-        });
-      })
-      .catch(error => console.log(error));
-    }
-  }); 
+  User.findOneByEmail(email)
+    .then(user => {
+      if(!user){
+        return res.status(401).json({ error : 'Utilisateur non trouvé !' });
+      }
+      bcrypt.compare(password, user[0].password)
+        .then(valid => {
+          if(!valid) {
+            return res.status(401).json({ error: 'Mot de passe incorrect !' });
+          }
+          res.status(200).json({
+            token: jwt.sign(
+              { userId: user[0].userId },
+              'RANDOM_TOKEN_SECRET',
+              { expiresIn: '24h' }
+            )
+          });
+        })
+        .catch(error => res.status(500).json({ error : 'Erreur du serveur 1' }));
+    })
+    .catch(error => res.status(500).json({ error}));
 };
+
+  
 
 //RÉCUPERE TOUTES LES INFORMATIONS D'UN UTILISATEUR -> AFFICHER LE PROFIL
 exports.userProfile = (req, res, next) => {
   let userId = req.params.userId;
-    User.findOneById(userId, (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ error : 'Erreur du serveur'});
-        } else {
-          console.log(data);
-          return res.status(200).json({"Utilisateur" : data});
-        } 
-    });
+    User.findOneById(userId)
+    .then(userData => {
+      let user = userData[0];
+      let userName = user.firstname +  ' ' +user.lastname;
+      return res.status(200).json({
+      "name": userName,
+      "email":user.email,
+      "department":user.department});
+    })
+    .catch(error => res.status(500).json({ error : 'Erreur du serveur' })); 
 };
 
 //SUPPRIME UN COMPTE UTILISATEUR
 exports.deleteProfile = (req, res, next) => {
   let userId = req.body.userId;
-  User.deleteProfile(userId, (err, data) =>{
-    if(err){
-      console.log(err);
-      return res.status(500).json({ error : 'Erreur du serveur'});
-    } else {
-      console.log(data);
-      return res.status(200).json({"Compte supprimé" : data});
-    }
-  });
+  User.deleteProfile(userId)
+  .then( response =>{
+    return res.status(200).json({"Compte supprimé" : response});
+  })
+  .catch(error => res.status(500).json({ error : 'Erreur du serveur' })); 
 }
 
 //MODIFIER UN COMPTE UTILISATEUR
@@ -118,13 +110,11 @@ exports.editProfile = (req,res) => {
   let department  = req.body.department ? req.body.department : '';
 
   bcrypt.hash(req.body.password, 10)
-  .then(hash=>{
-    User.editProfile([email,hash,lastname,firstname,department, userId], (err, data) =>{
-      if(err){
-        return res.status(500).json({ error : 'Erreur du serveur'});
-      } else {
-        return res.status(203).json("Information mises à jour ");
-      }
-    });
+  .then(hash =>{
+    User.editProfile([email,hash,lastname,firstname,department, userId])
+    .then( response => {
+      return res.status(203).json({"Information mises à jour " : response });
+    })
+    .catch(error => res.status(500).json({ error : 'Erreur du serveur' }));
   });
 }

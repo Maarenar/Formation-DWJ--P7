@@ -10,81 +10,70 @@ const User = function(user) {
 }; 
 
 //TROUVER UN UTILISATEUR AVEC SON EMAIL
-User.findOneByEmail = (email, result) => {
-  sql.query("SELECT * FROM gp_users WHERE email = ? " , email, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-      } else if (res.length === 0) {
-      result(null, res.length);
-      return;
-    } else if (res.length > 0){
-      result(null, res.length);
-      return;
-    }
-  });
+User.findOneByEmail = (email) => {
+  return new Promise((resolve,reject) => {
+    sql.query('SELECT * FROM gp_users WHERE email = ? ', email, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  })
 };
 
 //TROUVER UN UTILISATEUR AVEC SON ID
-User.findOneById = (userId, result) => {
-  sql.query("SELECT * FROM gp_users WHERE userId = ?", userId, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    } else {
-      console.log("utilisateur" , res);
-      result(null, res);
-      return;
-    }
-  });
+User.findOneById = (userId) => {
+  return new Promise((resolve,reject) => {
+    sql.query("SELECT * FROM gp_users WHERE userId = ? ", userId, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  })
 };
 
 //CRÉATION D'UN UTILISATEUR DANS LA BDD
-User.create = (newUser, result) => {
-  sql.query("INSERT INTO gp_users SET ?", newUser, (err,res) => {
-    if(err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    } else {
-      console.log("created user:", res.insertId);
-      result(null, res.insertId);
-      return;
-    }
-  });   
+User.create = (newUser) => {
+  return new Promise((resolve,reject) => {
+    sql.query("INSERT INTO gp_users SET ?", newUser, (err,res) => {
+      if(err) {
+        reject(err);
+        return;
+      } else {
+        resolve(res.insertId);
+      }
+    }); 
+  })  
 };
 
 
 //SUPPRIME UN UTILISATEUR AVEC SON ID
-User.deleteProfile = (userId, result) => {
-  sql.query("DELETE FROM gp_users WHERE userId = ?", userId, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-      } else { 
-      console.log("utilisateur supprimé:",  res.affectedRows );
-      result(null, res.affectedRows);
-      return;
-      }
-  });
+User.deleteProfile = (userId) => {
+  return new Promise((resolve,reject) => {
+    sql.query("DELETE FROM gp_users WHERE userId = ?", userId, (err, res) => {
+      if (err) {
+        reject(err);
+        } else {
+        resolve(res);
+        }
+    });
+  })
 };
 
 //MODIFIE UN UTILISATEUR AVEC SON ID
-User.editProfile = ([email,password,lastname,firstname,department, userId], result) => {
-  sql.query(`UPDATE gp_users SET email = '${email}', password = '${password}',lastname = '${lastname}', firstname = '${firstname}', department = '${department}'  WHERE userId = '${userId}'`, (err, res) => {
-    if (err) {
-      result(err, null);
-      console.log(err);
-      return;
-      } else { 
-      result(null, res);
-      console.log(res);
-      return;
-      }
-  });
+User.editProfile = ([email,password,lastname,firstname,department, userId]) => {
+  return new Promise((resolve,reject) => {
+    sql.query(`UPDATE gp_users SET email = '${email}', password = '${password}',lastname = '${lastname}', firstname = '${firstname}', department = '${department}'  WHERE userId = '${userId}'`, (err, res) => {
+      if (err) {
+        reject(err);
+        } else { 
+        resolve(res);
+        }
+    });
+  })
 };
 
 module.exports = User;
