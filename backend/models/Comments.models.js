@@ -10,42 +10,42 @@ const Comment = function(comment) {
 
 
 //AJOUTER UN COMMENTAIRE DANS LA BDD
-Comment.createComment = (newComment, result) => {
-  sql.query("INSERT INTO comments SET ? ", newComment, (err,res)=>{
-    if(err){
-      result(err, null);
-      return;
-    } else {
-      result(null, res);
-      return;
-    }
+Comment.createComment = (newComment) => {
+  return new Promise((resolve,reject) => {
+    sql.query("INSERT INTO comments SET ? ", newComment, (err,res)=>{
+      if(err){
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
   })
 }
 
 //MODIFIER UN COMMENTAIRE
-Comment.modifyComment = ([commentId, content], result) => {
-  sql.query(`UPDATE comments SET content = '${content}' WHERE commentId = '${commentId}'`, (err, res)=>{
-    if(err){
-      result(err, null);
-      return;
-    } else {
-      result(null,res);
-      return;
-    }
+Comment.modifyComment = ([commentId, content]) => { 
+  return new Promise((resolve,reject) => {
+    sql.query(`UPDATE comments SET content = '${content}' WHERE commentId = '${commentId}'`, (err, res) => {
+      if(err){
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
   })
 }
 
 //SUPPRIME UN COMMENTAIRE
 Comment.deleteComment = (commentId, result) => {
-  sql.query("DELETE FROM comments WHERE commentId = ?", commentId, (err, res) => {
-    if (err) {
-      result(err, null);
-      return;
-      } else {
-      result(null, res);
-      return;
-      }
-  });
+  return new Promise((resolve,reject) => {
+    sql.query("DELETE FROM comments WHERE commentId = ?", commentId, (err, res) => {
+      if (err) {
+        reject(err);
+        } else {
+        resolve(res);
+        }
+    });
+  })
 };
 
-  module.exports = Comment;
+module.exports = Comment;

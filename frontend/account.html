@@ -7,8 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.0/css/all.css" integrity="sha384-73lvm+n3qtrHBHjfLuMY7kIL3CdwrRc5jqCtzWASs6MshmR6Tq2veVBC5OVkSwEF" crossorigin="anonymous">
-        <script src="js/utils.js"></script>
-        <script src="js/account.js"></script>
     </head>
     <body>
         <header>
@@ -20,23 +18,23 @@
             <div class="page-container" id="user-page">
                 <section id="feed-container">
                     <div id="post-something">
-                        <form>
+                        <div>
                             <label></label>
-                            <input placeholder="Voulez-vous poster quelque chose?">
-                        </form>
+                            <input placeholder="Dites quelque chose !">
+                            <button id="post-submit"><img src="assets/img/send.png"></button>
+                        </div>
                     </div>
-                    <div id="feed">
+                    <div id="feed"> 
                     </div>
                 </section>
                 <section id="user">
                     <div>
-                        <img id="profile-pic" src="./assets/img/profile-pic.jpg">
-                        <div>
-                            <p id="user-name">nom et prenom</p>
-                            <p id="user-email">email</p>
-                            <p id="user-department">department</p>
-                        </div>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
+                        <p id="user-department"></p>
+                        <button>Modifier mes informations</button>
                     </div>
+                    
                 </section>
             </div>
         </main>
@@ -46,19 +44,7 @@
                 <p>&#xA9 2020</p>
             </div>
         </footer>
-        <script type="text/javascript">
-           function request(){
-                let xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                        if(this.readyState == 4 && [200, 201].indexOf(this.status) !== false) {
-                            let response = (JSON.parse(this.responseText));
-                            console.log(response);
-                        }
-                    }
-                xhttp.open("POST", "http://localhost:3000/api/users/signup");
-                xhttp.send();
-           };
-           request();
-        </script>
+        <script src="js/utils.js"></script>
+        <script src="js/account.js"></script>
     </body>
 </html>

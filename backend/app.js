@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-//const mysql = require('mysql2');
+const mysql = require('mysql2');
 
 const app = express();
-
+ 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', '*'); 
@@ -11,7 +11,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());   
+/*app.use(bodyParser.urlencoded({
+  extended: false
+}));*/
 
 const usersRoutes = require('./routes/users.routes');
 app.use('/api/users', usersRoutes);
