@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { urlencoded } = require('body-parser');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users.model');
 
@@ -17,7 +18,7 @@ exports.signup = (req, res, next) => {
   //vérification que l'email n'est pas déjà utilisé 
   User.findOneByEmail(email)
   .then(user => {
-    if(!user){
+    if(user){
       bcrypt.hash(password, 10)
       .then(hash => {
         const newUser = new User({
@@ -26,17 +27,9 @@ exports.signup = (req, res, next) => {
           lastname : lastname,
           firstname : firstname,
           department : department
-        });
+        }); 
         User.create(newUser)
         .then(user_id => {
-          res.status(200).json({
-            userId: user_id,
-            token: jwt.sign(
-              { userId: user_id },
-              'RANDOM_TOKEN_SECRET',
-              { expiresIn: '24h' }
-            )
-          });
           })
           .catch(error => res.status(500).json({ error : 'Erreur du serveur'}))
       })
@@ -53,15 +46,20 @@ exports.login = (req, res, next) => {
   let password = req.body.password;
   User.findOneByEmail(email)
     .then(user => {
+      let user_id = user[0].userId;
+      let userPassword = user[0].password;
+      let admin = user[0].admin;
       if(!user){
         return res.status(401).json({ error : 'Utilisateur non trouvé !' });
       }
-      bcrypt.compare(password, user[0].password)
+      bcrypt.compare(password, userPassword)
         .then(valid => {
           if(!valid) {
-            return res.status(401).json({ error: 'Mot de passe incorrect !' });
+            return res.status(401).json({ error: 'Mot de passe incorrect'});
           }
           res.status(200).json({
+            userId : user_id,
+            admin : admin,
             token: jwt.sign(
               { userId: user[0].userId },
               'RANDOM_TOKEN_SECRET',
@@ -69,7 +67,7 @@ exports.login = (req, res, next) => {
             )
           });
         })
-        .catch(error => res.status(500).json({ error : 'Erreur du serveur 1' }));
+        .catch(error => res.status(500).json({ error : 'Erreur du serveur' }));
     })
     .catch(error => res.status(500).json({ error}));
 };
@@ -78,13 +76,15 @@ exports.login = (req, res, next) => {
 
 //RÉCUPERE TOUTES LES INFORMATIONS D'UN UTILISATEUR -> AFFICHER LE PROFIL
 exports.userProfile = (req, res, next) => {
-  let userId = req.params.userId;
+  let userId = req.body.userId;
     User.findOneById(userId)
     .then(userData => {
       let user = userData[0];
-      let userName = user.firstname +  ' ' +user.lastname;
+      let firstName = user.firstname;
+      let lastName = user.lastname;
       return res.status(200).json({
-      "name": userName,
+      "firstname": firstName,
+      "lastname": lastName,
       "email":user.email,
       "department":user.department});
     })
@@ -108,13 +108,22 @@ exports.editProfile = (req,res) => {
   let lastname    = req.body.lastname;
   let firstname   = req.body.firstname;
   let department  = req.body.department ? req.body.department : '';
-
-  bcrypt.hash(req.body.password, 10)
-  .then(hash =>{
-    User.editProfile([email,hash,lastname,firstname,department, userId])
-    .then( response => {
-      return res.status(203).json({"Information mises à jour " : response });
+  if(req.body.password != ''){
+    bcrypt.hash(req.body.password, 10)
+    .then(hash =>{
+      User.editProfileAndPassword([email,hash,lastname,firstname,department, userId])
+      .then( response => {
+        console.log(response);
+        return res.status(203).json("Information mises à jour ");
+      })
+      .catch(error => res.status(500).json({ error : 'Erreur du serveur 1' }));
     })
-    .catch(error => res.status(500).json({ error : 'Erreur du serveur' }));
-  });
+    .catch(error => res.status(500).json({ error : 'Erreur du serveur 2' }))
+  } else {
+    User.editProfile([email,lastname,firstname,department, userId])
+    .then(response => {
+      return res.status(203).json("Information mises à jour ");
+    })
+    .catch(error => res.status(500).json({ error : 'Erreur du serveur 3' }))
+  }
 }

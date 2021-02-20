@@ -7,10 +7,14 @@ const Post = function(post) {
   this.date         = post.date
 };
 
-//TROUVER TOUS LES POSTS
+/**
+ * [getAll description]
+ *
+ * @return  {Object}  [return description]
+ */
 Post.getAll = () => {
   return new Promise((resolve, reject) => {
-    sql.query("SELECT * FROM gp_posts", (err, res) => {
+    sql.query("SELECT * FROM gp_posts ORDER BY date DESC", (err, res) => {
       if (err) {
         reject(err);
       } else {
@@ -21,10 +25,22 @@ Post.getAll = () => {
   
 };
 
+Post.getOnePost = (postId) => {
+  return new Promise((resolve, reject) => {
+    sql.query("SELECT * FROM gp_posts WHERE postId = ?" , postId, (err,res) => {
+      if(err){
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+}
+
 //RÉCUPÈRE LE NOM DE L'AUTEUR D'UN POST
 Post.getAuthor = (userId) => {
   return new Promise((resolve, reject) => {
-    sql.query("SELECT firstname, lastname FROM gp_users WHERE userId = ? ", userId, (err,res) => {
+    sql.query("SELECT firstname, lastname, admin FROM gp_users WHERE userId = ? ", userId, (err,res) => {
       if(err){
         reject(err);
       } else {

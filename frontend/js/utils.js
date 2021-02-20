@@ -21,33 +21,26 @@ function make(el){
 
 /**
  * 
- * @param {string} method 
- * @param {string} url 
- * @param {callback} callback
+ * @param {*} method 
+ * @param {*} url 
+ * @param {*} callback 
+ * @param {*} data 
  */
-function request(method, url, callback, data){
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-            if(this.readyState == 4 && [200, 201].indexOf(this.status) !== false) {
-                callback(JSON.parse(this.responseText));  
-            }
-        }
-    xhttp.open(method, url);
-    //xhttp.setRequestHeader("Authorization", 'Bearer'+ token);
-    if(method =='POST'){
-        xhttp.send(JSON.stringify(data));
-    }else{
-        xhttp.send();
-    } 
-};
 
-async function requestFetch(method, url, callback, data){
+async function request(method, url, callback, data){
 
+    let token;
+
+    if(localStorage.getItem('token')){
+        token = (localStorage.getItem('token'));
+    }
+    
     var myRequest = {   
         method: method,
         headers: {
             'Accept' : "application/json",
-            "Content-type" : "application/json"
+            "Content-type" : "application/json",
+            "Authorization" : token ? token : '',
         },
         mode: 'cors',
         cache: 'default',
@@ -56,6 +49,77 @@ async function requestFetch(method, url, callback, data){
     const response = await fetch(url,myRequest);
     callback(await response.json());
 }
+
+
+/**
+ * FONCTION POUR BLOQUER L'ACCÈS SI L'UTILISATEUR N'EST PAS CONNECTÉ
+ */
+function checkLogginProfile() {
+    
+    let user_id = localStorage.getItem('userId');
+
+    if(user_id == null){
+        let notLoggedContainer = make('div');
+        notLoggedContainer.className = 'modale';
+
+        let notLoggedDiv = make('div');
+
+        let notLogged = make('h2');
+        notLogged.className = 'disclaimer';
+        notLogged.innerText = "Hey ! Il faut vous connecter d'abord !";
+
+        let notLoggedLink = make('a');
+        notLoggedLink.innerText = 'Retourner à l\'accueil';
+        notLoggedLink.href = 'http://localhost:8888/site/frontend/';
+
+        notLoggedDiv.append(notLogged, notLoggedLink);
+        notLoggedContainer.append(notLoggedDiv);
+        document.body.appendChild(notLoggedContainer);
+    }
+    
+}
+
+/**
+ * FONCTION POUR BLOQUER L'ACCÈS SI L'UTILISATEUR N'EST PAS CONNECTÉ
+ */
+function checkLogginUserPage() {
+    
+    let user_id = localStorage.getItem('userId');
+
+    if(user_id == '' || user_id == null){
+
+        let notLoggedContainer = make('div');
+        notLoggedContainer.className = 'modale';
+
+        let notLoggedDiv = make('div');
+
+        let notLogged = make('h2');
+        notLogged.className = 'disclaimer';
+        notLogged.innerText = "Hey ! Il faut vous connecter d'abord !";
+
+        let notLoggedLink = make('a');
+        notLoggedLink.innerText = 'Retourner à l\'accueil';
+        notLoggedLink.href = 'http://localhost:8888/site/frontend/';
+
+        notLoggedDiv.append(notLogged, notLoggedLink);
+        notLoggedContainer.append(notLoggedDiv);
+        document.body.appendChild(notLoggedContainer);
+    } 
+}
+
+/**
+ * CRÉATION D'UN MESSAGE POUR AFFICHER LA REPONSE DU SERVEUR
+ */
+
+ function showAlert(message) {
+     let alertContainer = make('div');
+     let alertMessage = make('p');
+     alertMessage.innerText = message;
+
+     alertContainer.append(alertMessage);
+     document.body.appendChild(alertContainer);
+ }
+
 
 
 

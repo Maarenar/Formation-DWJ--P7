@@ -8,6 +8,17 @@ const Comment = function(comment) {
   this.date         = comment.date
 };
 
+Comment.getOneComment = (commentId) => {
+  return new Promise((resolve, reject) => {
+    sql.query("SELECT * FROM comments WHERE commentId = ?", commentId, (err, res) => {
+      if(err){
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+}
 
 //AJOUTER UN COMMENTAIRE DANS LA BDD
 Comment.createComment = (newComment) => {
