@@ -23,3 +23,4 @@ function confirmationNewPswd() {
     document.getElementById('message-new-pswd').textContent = 'Un email vous a été envoyé';
     document.getElementById('form-new-pswd').style.display = 'none';
 }
+

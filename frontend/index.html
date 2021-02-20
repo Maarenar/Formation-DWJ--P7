@@ -27,7 +27,7 @@
                 </div>
                 <a href="./reset-pswd.html"><button class="btn secondary-btn">Mot de passe oublié</button></a>
             </div>
-            <div class="page-container">
+            <div>
                 <div class="video-container">
                     <video autoplay muted>
                         <source src="./assets/videos/Meeting.mp4" type="video/mp4">
@@ -48,21 +48,21 @@
                             <div>
                                 <div>
                                     <label for="lastname"></label>
-                                    <input type="text" name="lastname" placeholder="Nom">
+                                    <input type="text" id="lastname" name="lastname" placeholder="Nom" value="renard">
                                     <label for="firstname"></label>
-                                    <input type="text" name="firstname" placeholder="Prénom">
+                                    <input type="text" id="firstname" name="firstname" placeholder="Prénom" value="marion">
                                 </div>
                                 <div class="email-and-psw">
                                     <label for="email-signup"></label>
-                                    <input type="email" name="email-signup" placeholder="Email">
+                                    <input type="email" name="email-signup" id="email-signup" placeholder="Email" value="mrenard37@gmail.com">
                                     <div class="psw-section">
                                         <label for="password-signup"></label>
-                                        <input type="password" name="password-signup" placeholder="Mot de passe">
+                                        <input type="password" name="password-signup" id="password-signup" placeholder="Mot de passe" value="blabla">
                                         <i class="fas fa-eye" onclick="showPassword()"></i>
                                     </div>
                                 </div>
                                 <label for="department"></label>
-                                <input type="text" name="department" placeholder="Département">
+                                <input type="text" id="department" name="department" placeholder="Département">
                                 <button class="btn main-btn" id="signup-btn">S'inscrire</button>
                             </div>
                         </div>

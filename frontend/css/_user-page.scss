@@ -41,6 +41,7 @@
             width: 100%;
         }
         .post-container{
+            position: relative;
             background-color: #fff;
             width: 80%;
             margin: 50px auto 50px auto;
@@ -74,6 +75,23 @@
                         text-transform: capitalize;
                     }
                 }
+            }
+            .modifyBtn{
+                position: absolute; 
+                top: 0;
+                right: 0;
+                min-height: 20px;
+                background-color: aquamarine; 
+            }
+            .deleteBtn{
+                position: absolute;
+                top: 0;
+                right: 50px;
+                min-height: 20px;
+                background-color: red;
+            }
+            .add-comment{
+                width: 100%;
             }
         }
     }
@@ -118,3 +136,4 @@
         }
     }
 }
+

@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());   
 /*app.use(bodyParser.urlencoded({
-  extended: false
+  extended: false 
 }));*/
 
 const usersRoutes = require('./routes/users.routes');
@@ -26,4 +26,4 @@ app.use('/api/posts', postsRoutes);
 const commentsRoutes = require('./routes/comments.routes');
 app.use('/api/comments', commentsRoutes);
 
-module.exports = app; 
+module.exports = app;  
