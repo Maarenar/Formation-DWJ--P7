@@ -1,6 +1,5 @@
 #user-page{
     display: flex;
-    min-height: 700px;
     @media #{$mobile-query}{
         flex-direction: column-reverse;
         align-items: center;
@@ -136,4 +135,10 @@
         }
     }
 }
+
+.post-editor{
+    min-height: 50px;
+    width: 100%;
+}
+
 

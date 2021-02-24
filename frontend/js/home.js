@@ -3,7 +3,7 @@ window.addEventListener("load", ()=>{
     function login(email,password){
         localStorage.clear();
         request('POST', "http://localhost:3000/api/users/login/",function(answer){
-        if(answer.error === 'Mot de passe incorrect'){
+        if(answer.error){
             alert(answer.error);
         } else {
             localStorage.setItem('token',answer.token);
@@ -28,9 +28,9 @@ window.addEventListener("load", ()=>{
         localStorage.clear();
         request('POST', "http://localhost:3000/api/users/signup/", function (data) {
             console.log(data);
-        /*localStorage.setItem('token',data.token);
+        localStorage.setItem('token',data.token);
         localStorage.setItem('userId', data.userId);
-        window.location.replace("http://localhost:8888/site/frontend/account.html");*/
+        window.location.replace("http://localhost:8888/site/frontend/account.html");
         },{
             email       : email,
             password    : password,

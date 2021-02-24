@@ -3,8 +3,7 @@ const { urlencoded } = require('body-parser');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users.model');
 
-//FONCTION DE CRÉATION D'UN COMPTE UTILISATEUR (SIGNUP)
-exports.signup = (req, res, next) => {
+exports.signup = async (req, res, next) => {
   let email       = req.body.email;
   let password    = req.body.password;
   let lastname    = req.body.lastname;
@@ -15,29 +14,34 @@ exports.signup = (req, res, next) => {
   if(!email || !password || !lastname || !firstname){
     return res.status(400).send({ message: "Tous les champs doivent être remplis"});
   }
-  //vérification que l'email n'est pas déjà utilisé 
-  User.findOneByEmail(email)
-  .then(user => {
-    if(user){
-      bcrypt.hash(password, 10)
-      .then(hash => {
-        const newUser = new User({
-          email : email,
-          password : hash,
-          lastname : lastname,
-          firstname : firstname,
-          department : department
-        }); 
-        User.create(newUser)
-        .then(user_id => {
-          })
-          .catch(error => res.status(500).json({ error : 'Erreur du serveur'}))
-      })
+
+  try {
+    //vérification que l'email n'est pas déjà utilisé
+    const user = await User.findOneByEmail(email);
+    if (user.length === 0) {
+      const hashed = await bcrypt.hash(password, 10);
+      const newUser = new User({
+        email: email,
+        password: hashed,
+        lastname: lastname,
+        firstname: firstname,
+        department: department,
+      });
+      console.log("newUser", newUser);
+      const user_id = await User.create(newUser);
+      res.status(200).json({
+        userId: user_id,
+        admin: 0,
+        token: jwt.sign({ userId: user_id },'RANDOM_TOKEN_SECRET', {
+          expiresIn: "24h",
+        })
+      });
     } else {
-      res.status(500).json({ error : 'L\'utilisateur existe déjà' })
+      return res.status(400).send({ error: "Cet email est deja utilise" });
     }
-  })
-  .catch(error => res.status(500).json({ error }));  
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 };
 
 //FONCTION DE LOGIN
@@ -69,7 +73,7 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error : 'Erreur du serveur' }));
     })
-    .catch(error => res.status(500).json({ error}));
+    .catch(error => res.status(500).json({ error : "Utilisateur introuvable"}));
 };
 
   
@@ -108,7 +112,7 @@ exports.editProfile = (req,res) => {
   let lastname    = req.body.lastname;
   let firstname   = req.body.firstname;
   let department  = req.body.department ? req.body.department : '';
-  if(req.body.password != ''){
+  if(req.body.password !== ''){
     bcrypt.hash(req.body.password, 10)
     .then(hash =>{
       User.editProfileAndPassword([email,hash,lastname,firstname,department, userId])

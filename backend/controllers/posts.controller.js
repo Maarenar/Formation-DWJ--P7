@@ -58,13 +58,22 @@ exports.createPost = (req,res,next) =>{
 
 //EDITER UN POST
 exports.modifyPost = (req,res,next) => {
-  let postId = req.body.postId;
+  let post_id = req.body.postId;
   let content = req.body.content;
-  Post.modifyPost([postId, content])
-  .then(response => {
-    return res.status(201).json("Post modifié ! ");
+  let user_id = req.body.userId;
+  Post.findOneById(postId)
+  .then(post => {
+    if (post.userId = user_id){
+      Post.modifyPost([postId, content])
+      .then(response => {
+        return res.status(201).json("Post modifié ! ");
+      })
+      .catch(error => res.status(500).json({ error : 'Erreur du serveur'}));
+    } else {
+      return res.status(401).json("Action non autorisée ! ");
+    }
   })
-  .catch(error => res.status(500).json({ error : 'Erreur du serveur'}));
+  .catch(error => res.status(500).json({ error : 'Post introuvable'}))
 }
 
 //SUPPRIME UN POST
