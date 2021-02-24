@@ -79,7 +79,7 @@ User.editProfile = ([email,lastname,firstname,department, userId]) => {
 
 User.editProfileAndPassword = ([email,hash,lastname,firstname,department, userId]) => {
   return new Promise((resolve,reject) => {
-    sql.query(`UPDATE gp_users SET email = '${email}', password = '${hash}' lastname = '${lastname}', firstname = '${firstname}', department = '${department}'  WHERE userId = '${userId}'`, (err, res) => {
+    sql.query(`UPDATE gp_users SET email = '${email}', password = '${hash}', lastname = '${lastname}', firstname = '${firstname}', department = '${department}'  WHERE userId = '${userId}'`, (err, res) => {
       if (err){
         console.log(err);
         reject(err);

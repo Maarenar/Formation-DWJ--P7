@@ -45,15 +45,6 @@ window.addEventListener("load", () => {
         publish(postContent, userId);
     })
 
-    /**
-     * FONCTION POUR MODIFIER UN POST
-     */
-    function modifyPost() {
-        request("PUT", "http://localhost:3000/api/posts/", function() {
-            alert("C'est fait !")
-        })
-    }
-
      /**
      * FONCTION POUR SUPPRIMER UN POST
      */
@@ -82,16 +73,6 @@ window.addEventListener("load", () => {
     }
 
     /**
-     * FONCTION POUR MODIFIER UN COMMENTAIRE
-     * @param {*} params 
-     */
-    function modifyComment(params) {
-        request("PUT", "http://localhost:3000/api/comments/", function() {
-            alert("C'est fait !")
-        })
-    }
-
-    /**
      * FONCTION POUR SUPPRIMER UN COMMENTAIRE
      * @param {*} params 
      */
@@ -103,25 +84,6 @@ window.addEventListener("load", () => {
             userId : user_id
         })
     }
-
-    /**
-     * FONCTION POUR METTRE A JOUR LES INFOS DE PROFILE DE L'UTILISATEUR
-     */
-    function modifyInfos() {
-        request("PUT", "http://localhost:3000/api/users/", function() {
-            alert("C'est fait !")
-        })
-    }
-
-    /**
-     * FONCTION POUR METTRE A JOUR LE MOT DE PASSE DE L'UTILISATEUR
-     */
-    function modifyPassword() {
-        request("PUT", "http://localhost:3000/api/users/pswd", function() {
-            alert("C'est fait !")
-        })
-    }
-
         
     /**
      * BUILD A CONTAINER FOR EACH POST AND ADDS THE DATA RECEIVED IN IT
@@ -190,7 +152,6 @@ window.addEventListener("load", () => {
                             singleComContainer.append(formattedComDate, comAuthorName,comContent);
                         }
 
-                        
                         commsContainer.append(singleComContainer);
                     });
                 } else {
@@ -216,13 +177,6 @@ window.addEventListener("load", () => {
                 postFullContent.className = 'post-content';
                 postFullContent.innerText = "« " + `${postContent}` + " »";
 
-                let modifyBtn = make('button');
-                modifyBtn.className = 'modifyBtn';
-                modifyBtn.innerText = 'Modifier';
-                modifyBtn.addEventListener("click", ()=> {
-                    modifyPost(post.postId);
-                })
-               
                 let deleteBtn = make('button');
                 deleteBtn.className = 'deleteBtn';
                 deleteBtn.innerText = 'Supprimer';
@@ -244,10 +198,6 @@ window.addEventListener("load", () => {
 
                 if (userIdContainer === user_id || admin === 1){
                     postContainer.append(deleteBtn);
-                }
-
-                if (userIdContainer === user_id){
-                    postContainer.append(modifyBtn);
                 }
 
                 postContainer.append(authorContent, postFullContent, commenting, commsContainer);
