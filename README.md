@@ -7,7 +7,7 @@ BACKEND
 Exécuter npm install dans le répertoire backend/
 
 DATABASE
-Créer une bdd "groupomania" et importer le fichier groupomania.sql
+Créer une bdd "groupomania" et importer le fichier backend/groupomania.sql
 
 Dupliquer le fichier backend/.env.example et le sauvegarder en .env
 SECRET : clé secrète pour l'encodage du token d'authentification
