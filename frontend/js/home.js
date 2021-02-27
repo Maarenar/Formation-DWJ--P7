@@ -24,10 +24,9 @@ window.addEventListener("load", ()=>{
     })
 
     function signup(email, password, firstname, lastname, department) {
-        console.log(email);
         localStorage.clear();
         request('POST', "http://localhost:3000/api/users/signup/", function (data) {
-            console.log(data);
+        console.log(data);
         localStorage.setItem('token',data.token);
         localStorage.setItem('userId', data.userId);
         window.location.replace("http://localhost:8888/site/frontend/account.html");
@@ -48,7 +47,7 @@ window.addEventListener("load", ()=>{
         let firstname   = oid('firstname').value;
         let lastname    = oid('lastname').value;
         let department  = oid('department').value;
-        signup(email, password, firstname, lastname, department);
+       signup(email, password, firstname, lastname, department);
     })
 
 })

@@ -4,8 +4,6 @@ const mysql = require('mysql2');
 const helmet = require('helmet');
 require('dotenv').config();
 
-
-
 const app = express();
  
 app.use((req, res, next) => {

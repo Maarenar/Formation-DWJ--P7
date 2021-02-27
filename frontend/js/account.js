@@ -141,16 +141,17 @@ window.addEventListener("load", () => {
                         let formattedComDate = 'Le ' + comDate.getDate() + '/' + (comDate.getMonth()+1) + '/' + comDate.getFullYear() + ' - ' + comDate.getHours() + ':' + comDate.getMinutes() ;
                         
                         let deleteComButton = make('button');
-                        deleteComButton.innerText = 'Supprimer ce commentaire'
+                        deleteComButton.className = 'btn small deleteCom'
+                        deleteComButton.innerText = 'Supprimer'
                         deleteComButton.addEventListener("click", () => {
                             deleteComment(comment.commentid, user_id);
                         }) 
 
-                        if(user_id == comment.userId || admin == 1){
+                        //if(user_id == comment.userId || admin == 1){
                             singleComContainer.append(formattedComDate, deleteComButton, comAuthorName,comContent);
-                        } else {
-                            singleComContainer.append(formattedComDate, comAuthorName,comContent);
-                        }
+                        //} else {
+                            //singleComContainer.append(formattedComDate, comAuthorName,comContent);
+                        //}
 
                         commsContainer.append(singleComContainer);
                     });
@@ -178,14 +179,14 @@ window.addEventListener("load", () => {
                 postFullContent.innerText = "« " + `${postContent}` + " »";
 
                 let deleteBtn = make('button');
-                deleteBtn.className = 'deleteBtn';
+                deleteBtn.className = 'btn small deleteBtn';
                 deleteBtn.innerText = 'Supprimer';
                 deleteBtn.addEventListener("click", () => {
                     deletePost(post.postId, user_id, admin);
                 })
 
                 let commenting = make('input');
-                commenting.className = 'add-comment';
+                commenting.className = 'add-comment input';
                 commenting.placeholder = 'Ajouter un commentaire';
                 commenting.addEventListener("keypress", function(e) {
                     if (e.key === 'Enter') {
@@ -223,7 +224,7 @@ window.addEventListener("load", () => {
         let userEmail = oid('user-email');
         userEmail.innerText = userInfos.email;
         let userDepartment = oid('user-department');
-        userDepartment.innerText = userInfos.department ? userInfos.department : 'Vous n\'avez pas renseigné votre fonction';
+        userDepartment.innerText = userInfos.department ;
     }
 
     oid('logout').addEventListener("click", () =>{

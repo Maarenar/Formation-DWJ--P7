@@ -53,6 +53,10 @@ main{
     margin: auto;
     padding-left: 50px;
     padding-right: 50px;
+    @media #{$mobile-query}{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 .new-pswd-container{
@@ -69,4 +73,15 @@ main{
     p{
         margin-bottom: 30px;
     }
+}
+
+.input{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 10px;
 }

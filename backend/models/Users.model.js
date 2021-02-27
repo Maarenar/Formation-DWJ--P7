@@ -14,8 +14,10 @@ User.findOneByEmail = (email) => {
   return new Promise((resolve,reject) => {
     sql.query('SELECT * FROM gp_users WHERE email = ? ', email, (err, res) => { 
       if (err) {
+        console.log(err);
         reject(err);
       } else {
+        console.log(res);
         resolve(res);
       }
     });
@@ -43,7 +45,6 @@ User.create = (newUser) => {
         reject(err);
         return;
       } else {
-        console.log(res.insertId);
         resolve(res.insertId);
       }
     }); 

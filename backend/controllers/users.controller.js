@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const { urlencoded } = require('body-parser');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users.model');
 
@@ -14,7 +13,6 @@ exports.signup = async (req, res, next) => {
   if(!email || !password || !lastname || !firstname){
     return res.status(400).send({ message: "Tous les champs doivent être remplis"});
   }
-
   try {
     //vérification que l'email n'est pas déjà utilisé
     const user = await User.findOneByEmail(email);
@@ -23,11 +21,10 @@ exports.signup = async (req, res, next) => {
       const newUser = new User({
         email: email,
         password: hashed,
-        lastname: lastname,
-        firstname: firstname,
-        department: department,
+        lastname: lastname,    
+        firstname: firstname, 
+        department: department, 
       });
-      console.log("newUser", newUser);
       const user_id = await User.create(newUser);
       res.status(200).json({
         userId: user_id,
@@ -40,6 +37,7 @@ exports.signup = async (req, res, next) => {
       return res.status(400).send({ error: "Cet email est deja utilise" });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };
