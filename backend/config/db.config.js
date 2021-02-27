@@ -1,7 +1,8 @@
 module.exports = {
     HOST: process.env.HOST,
-    USER: process.env.USER,
+    USER: "marionadmin",
     PASSWORD: process.env.PASSWORD,
     DB: process.env.DB,
-    PORT: process.env.PORT
+    PORT: 8889
   };
+

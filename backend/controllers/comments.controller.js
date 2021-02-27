@@ -5,7 +5,7 @@ const User = require('../models/Users.model');
 exports.createComment = (req,res,next) =>{
   let content = req.body.content;
   let userId  = req.body.userId;
-  let postId  = req.body.postId;
+  let postId  = req.body.postId;  
   let date    = req.body.date ;
   const newComment = new Comment({
     content : content,

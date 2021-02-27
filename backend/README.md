@@ -1,4 +1,4 @@
-Projet 7 - Création d'un reseau social d'entreprise
+Projet 7 - Création d'un réseau social d'entreprise
 
 FRONTEND
 Racine : http://localhost:8888/site/
