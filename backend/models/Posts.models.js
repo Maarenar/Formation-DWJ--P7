@@ -16,6 +16,7 @@ Post.getAll = () => {
   return new Promise((resolve, reject) => {
     sql.query("SELECT * FROM gp_posts ORDER BY date DESC", (err, res) => {
       if (err) {
+        console.log(err);
         reject(err);
       } else {
         resolve(res);
