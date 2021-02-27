@@ -619,4 +619,11 @@ main {
   margin-bottom: 10px;
 }
 
+textarea {
+  font-family: "Roboto";
+}
+textarea::placeholder {
+  font-family: "Roboto";
+}
+
 /*# sourceMappingURL=style.css.map */

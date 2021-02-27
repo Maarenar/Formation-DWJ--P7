@@ -26,9 +26,9 @@ window.addEventListener("load", ()=>{
     function signup(email, password, firstname, lastname, department) {
         localStorage.clear();
         request('POST', "http://localhost:3000/api/users/signup/", function (data) {
-        console.log(data);
         localStorage.setItem('token',data.token);
         localStorage.setItem('userId', data.userId);
+        localStorage.setItem('admin', data.admin);
         window.location.replace("http://localhost:8888/site/frontend/account.html");
         },{
             email       : email,

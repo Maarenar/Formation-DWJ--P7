@@ -147,11 +147,11 @@ window.addEventListener("load", () => {
                             deleteComment(comment.commentid, user_id);
                         }) 
 
-                        //if(user_id == comment.userId || admin == 1){
+                        if(user_id == comment.userId || admin == 1){
                             singleComContainer.append(formattedComDate, deleteComButton, comAuthorName,comContent);
-                        //} else {
-                            //singleComContainer.append(formattedComDate, comAuthorName,comContent);
-                        //}
+                        } else {
+                            singleComContainer.append(formattedComDate, comAuthorName,comContent);
+                        }
 
                         commsContainer.append(singleComContainer);
                     });

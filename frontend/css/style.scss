@@ -85,3 +85,10 @@ main{
     border: none;
     margin-bottom: 10px;
 }
+
+textarea{
+    font-family: 'Roboto';
+    &::placeholder{
+        font-family: 'Roboto';
+    }
+}
